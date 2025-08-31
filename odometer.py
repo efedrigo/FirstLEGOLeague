@@ -1,140 +1,154 @@
+#
+# 2D odometer
+#
+
 from pybricks.hubs import InventorHub
 from pybricks.pupdevices import Motor, ColorSensor, UltrasonicSensor
-from pybricks.parameters import Button, Color, Direction, Port, Side, Stop
+from pybricks.parameters import Button, Color, Direction, Port, Side, Stop, Axis
 from pybricks.robotics import DriveBase
 from pybricks.tools import wait, StopWatch
 import umath
 
-_P1 = [-0.1199069, 0.3874327, 9669.18];
+###############################################################
 
 class odometer():
-    position = [0,0,0];
-    speed = [0,0,0];
-    avgspeed = [0,0,0]
     hub = 0;
     watch = 0;
-    acc_acceleration = [0,0,0];
-    acc_rotated = [0,0,0];
-    n = 0;
+    motorL = 0;
+    motorR = 0;
+    wheelC = 0;
+    D = 1;
+    t_prev = 0;
+    encR_prev = 0;
+    encL_prev =0;
+    X=0;
+    Y=0;
+    theta=0;
+    yaw = 0;
 
-    def __init__(self,hub,watch):
+  #  XA = [];
+  #  YA = [];
+  #  thetaA = [];
+  #  yawA = [];
+    
+
+    def __init__(self,hub,watch,motorLeft,motorRight,wheelC,D):
         print("Odometer constructor")
         self.hub = hub;
         self.watch = watch;
+        self.wheelC = wheelC;
+        self.motorL = motorLeft;
+        self.motorR = motorRight;
+        self.D = D;
+        self.start();
     
-    def __str__(self):
-        return "Odometer"
+    def start(self):
+        print("odomoter start")
+        self.t_prev=self.watch.timeus()/1000;
+        self.encR_prev=self.motorR.angle()
+        self.encL_prev=self.motorL.angle();
 
+        self.X=0;
+        self.Y=0;
+        self.theta=0;
+        self.yaw = 0;
+    
     def getPosition(self):
-        return self.position;
+        return [self.X,self.Y,self.theta,self.yaw];
 
-    def startCalibration(self):
-        self.n = 0;
-        self.acc_acceleration = [0,0,0];
-        self.acc_rotated = [0,0,0];
+    def runOnce(self):
+        t = self.watch.timeus()/1000;
+        encR=self.motorR.angle()
+        encL=self.motorL.angle();
+        self.yaw = self.hub.imu.heading();     # degrees
+#        speedR = self.motorR.speed()
+#        speedL = self.motorL.speed()
+        yaw_rate = self.hub.imu.angular_velocity(Axis.Z)
 
-    def getCalibrateAcceleration(self):
-        if (self.n == 0):
-            return [0,0,0]
+        deltaT=t-self.t_prev;
+        delta_encR=encR-self.encR_prev;
+        delta_encL=encL-self.encL_prev;
 
-        val = self.acc_acceleration;
-        val[0] = val[0]/self.n
-        val[1] = val[1]/self.n
-        val[2] = val[2]/self.n
+        if (delta_encR == 0 and delta_encL == 0):
+            return [self.X,self.Y,self.theta,self.yaw]
+        
+        if (encR-self.encR_prev<-180):
+            delta_encR += 360;
+        if (encR-self.encR_prev>180):
+            delta_encR -= 360;
+        if (encL-self.encL_prev<-180):
+            delta_encL += 360;
+        if (encL-self.encL_prev>180):
+            delta_encL -= 360;
+  
+        self.t_prev=t;
+        self.encR_prev = encR;
+        self.encL_prev = encL;
 
-        return val;
+        deltaR=delta_encR/360*self.wheelC;
+        deltaL=delta_encL/360*self.wheelC;
+        deltaS=(deltaR+deltaL)/2;
+#        deltaTheta=(deltaR-deltaL)/self.D;
+#        print(deltaS,self.theta)
+  
+        deltaVR=deltaR/deltaT;
+        deltaVL=deltaL/deltaT;
+        deltaV=(deltaVR+deltaVL)/2;
+        omega = (deltaVR-deltaVL)/self.D;
 
-    def getCalibratedRotatedAcceleration(self):
-        if (self.n == 0):
-            return [0,0,0]
+        self.theta=self.theta+omega*deltaT; # computed from encoders, not gyro!
+    
+        self.X=self.X+deltaS*umath.cos(self.theta);
+        self.Y=self.Y+deltaS*umath.sin(self.theta); 
 
-        val = self.acc_rotated;
-        val[0] = val[0]/self.n
-        val[1] = val[1]/self.n
-        val[2] = val[2]/self.n
+        return [self.X,self.Y,self.theta,self.yaw]
 
-        return val;
-
-    def run(self):
-        t=self.watch.timeus()/1000;
-        start=t;
-        g=0;
-        self.n=0;
+    async def run(self):
         loop=True;
-        P1 = [0,0,0]
+        n=0;
+
+        self.start();
 
         print("---- ODOMETER ----------------")
         while loop:
+            pos = self.runOnce();
+            n=n+1
+            if (n%10 == 0):
+                print(n,",",pos[0],",",pos[1],",",pos[2],",",pos[3])
 
-            await wait(0)
-            t1 = self.watch.timeus()/1000; # seconds
+            await wait(10)
 
-            [pitch,roll]=self.hub.imu.tilt()  # degrees
-            yaw = self.hub.imu.heading();     # degress
-            acc = self.hub.imu.acceleration();# mm/second^2
-            alpha = yaw/180.0*umath.pi;   #rad
-            beta = pitch/180.0*umath.pi;   #rad
-            gamma = roll/180.0*umath.pi; #rad
+    def runAccumulate(self):
+        loop=True;
+        self.start();
+        print("---- ODOMETER ACC ----------------")
+        while loop:
+            pos = self.runOnce();
 
-            self.acc_acceleration[0] += acc[0]
-            self.acc_acceleration[1] += acc[1]
-            self.acc_acceleration[2] += acc[2]
+            self.XA.append(pos[0]);
+            self.YA.append(pos[1]);
+            self.thetaA.append(pos[2]);
+            self.yawA.append(pos[3])
 
-            R11=umath.cos(alpha)*umath.cos(beta)
-            R12=umath.cos(alpha)*umath.sin(beta)*umath.sin(gamma)-umath.sin(alpha)*umath.cos(gamma)
-            R13=umath.cos(alpha)*umath.sin(beta)*umath.cos(gamma)+umath.sin(alpha)*umath.sin(gamma)
-            R21=umath.sin(alpha)*umath.cos(beta)
-            R22=umath.sin(alpha)*umath.sin(beta)*umath.sin(gamma)+umath.cos(alpha)*umath.cos(gamma)
-            R23=umath.sin(alpha)*umath.sin(beta)*umath.cos(gamma)-umath.cos(alpha)*umath.sin(gamma)
-            R31=-umath.sin(beta);
-            R32=umath.cos(beta)*umath.sin(gamma);
-            R33=umath.cos(beta)*umath.cos(gamma);
+            wait(10)
 
-            P1=[R11*acc[0]+R12*acc[1]+R13*acc[2],
-                R21*acc[0]+R22*acc[1]+R23*acc[2],
-                R31*acc[0]+R32*acc[1]+R33*acc[2]];
+    def getXA(self):
+        return self.XA;
 
-            self.acc_rotated[0] += P1[0]
-            self.acc_rotated[1] += P1[1]
-            self.acc_rotated[2] += P1[2]
+    def getYA(self):
+        return self.YA;
 
-            #9806.65
-            P1[0] -=_P1[0]; # mm/s^2
-            P1[1] -=_P1[1]; # mm/s^2
-            P1[2] -=_P1[2]; # mm/s^2
+    def getXA(self):
+        return self.XA;
 
-            a = umath.sqrt(umath.pow(P1[0],2)+
-                umath.pow(P1[1],2)+umath.pow(P1[2],2))
+    def getXA(self):
+        return self.XA;
 
-            t1 = self.watch.timeus()/1000; # seconds
-            deltat=(t1-t);
-            t=t1
-            self.speed[0] += P1[0]*deltat; #mm/s
-            self.speed[1] += P1[1]*deltat; #mm/s
-            self.speed[2] += P1[2]*deltat #mm/s
-            self.avgspeed[0] += self.speed[0]
-            self.avgspeed[1] += self.speed[1]
-            self.avgspeed[2] += self.speed[2]
+    def getXY(self):
+        return [self.X,self.Y]
 
-            s=umath.sqrt(umath.pow(self.speed[0],2)+
-                umath.pow(self.speed[1],2)+
-                umath.pow(self.speed[2],2));
+    def getPos(self):
+        return [self.X,self.Y,self.theta]
 
-            self.position[0] += self.speed[0]*deltat; #mm
-            self.position[1] += self.speed[1]*deltat; #mm
-            self.position[2] += self.speed[2]*deltat; #mm
-
-            d=umath.sqrt(umath.pow(self.position[0],2)+
-                umath.pow(self.position[1],2)+
-                umath.pow(self.position[2],2));
-
-            if (self.n%80 == 1):
-                print(self.n,t1,d,s,a,yaw,pitch,roll,P1[0],P1[1],P1[2])
-
-            self.n += 1;
-
-
-
-
-
-
+    def getPosFull(self):
+        return [self.X,self.Y,self.theta,self.yaw]
