@@ -1,0 +1,16 @@
+from pybricks.hubs import InventorHub
+from pybricks.pupdevices import Motor, ColorSensor, UltrasonicSensor
+from pybricks.parameters import Button, Color, Direction, Port, Side, Stop, Axis
+from pybricks.robotics import DriveBase
+from pybricks.tools import wait, StopWatch
+import umath
+
+hub = InventorHub(front_side=Axis.X,top_side=-Axis.Z)
+hub.imu.reset_heading(90)
+
+n = 0;
+while (n<200):
+    n += 1;
+    print(n,hub.imu.heading())
+    wait(100)
+
