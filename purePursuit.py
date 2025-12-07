@@ -128,9 +128,12 @@ async def followPath(myRobot,myOdometer,path,speed):
             break
     
         # Speed: slower near the end
+        reduced_speed_time = 1.0 #seconds
         robot_speed = robot_speed_initial
-        if distance_to_goal < robot_speed_initial * 0.9 * 2.0:
-            robot_speed = 10.0 + distance_to_goal / 2.0
+        # if distance to goal is less than the time it takes to reach in the approaching zone
+        # reduce the speed
+        if distance_to_goal < robot_speed_initial * reduced_speed_time:
+            robot_speed = distance_to_goal/reduced_speed_time 
 
         # Update look-ahead
         robot_look_ahead = 25.0 + 0.75 * robot_speed
@@ -179,4 +182,6 @@ async def followPath(myRobot,myOdometer,path,speed):
 
         await wait(10)
 
+    myRobot.motorLeft.stop()
+    myRobot.motorRight.stop()
     print("End path follower")

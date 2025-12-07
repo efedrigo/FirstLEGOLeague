@@ -7,27 +7,37 @@ from pybricks.parameters import Axis
 import umath
 
 from robot import robotCompetition
-from odometer import odometer
+#from odometer import odometer
 
 from testConfig import program1, program0
 from testOdometer import program2
+from testPursuit import testPursuit
+from mission1 import mission1
+from mission3_4 import mission3_4
+from mission9 import mission9
 
 watch = StopWatch()
 myRobot = robotCompetition()
-myOdometer = odometer(myRobot,watch);
+#myOdometer = odometer(myRobot,watch);
 
 color = myRobot.colorSensor.color()
 print("sensed color:",color)
 
 MissionTable = [[Color.NONE,0,program0], # config test
-                [Color.ROSE,1,program1], # test configuration with motion
-                [Color.RED,2,program2]]  # test odometer
+                [Color.LIGHTBROWN,1,program1], # test configuration with motion
+                [Color.DARKBROWN,2,program2],  # test odometer
+                [Color.BEIGE,3,testPursuit], # test trajectory tracking
+                [Color.YELLOW,4,mission1],
+                [Color.BLACK,5,mission3_4],
+                [Color.MAGENTA,6,mission9]
+                ]  
 
 for mission in MissionTable:
     if (color == mission[0]):
         print(mission)
         myRobot.hub.display.char(str(mission[1]))
         print("Running program ",mission[1])
-        mission[2](myRobot,myOdometer)
+#        mission[2](myRobot,myOdometer)
+        mission[2](myRobot)
 
-wait(1000)
+wait(500)

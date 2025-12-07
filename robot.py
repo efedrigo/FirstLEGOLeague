@@ -3,6 +3,7 @@ from pybricks.pupdevices import Motor, ColorSensor, UltrasonicSensor
 from pybricks.parameters import Button, Color, Direction, Port, Side, Stop, Axis, Icon
 from pybricks.robotics import DriveBase
 from pybricks.iodevices import PUPDevice
+from pybricks.tools import wait
 from uerrno import ENODEV
 import umath
 
@@ -45,22 +46,31 @@ class robot():
     hub = 0;
     motorLeft = 0;
     motorRight = 0;
+    wheelDiameter = 0;
     wheelC = 0;
-    D = 0;
+    axle=0
 
     def __init__(self):
-        self.hub = InventorHub(front_side=Axis.X,top_side=-Axis.Z);
+        self.hub = InventorHub(front_side=Axis.X,top_side=Axis.Z);
         self.motorLeft = Motor(Port.A,positive_direction=Direction.COUNTERCLOCKWISE);
         self.motorRight = Motor(Port.B,positive_direction=Direction.CLOCKWISE);
-        self.wheelC = 88.6 * umath.pi; #mm
-        self.D = 88; #mm
+        self.wheelDiameter = 88.6; # mm
+        self.wheelC = self.wheelDiameter * umath.pi; #mm
+        self.axle = 88; #mm
 
+##################################################
+#
+#
+#
+##################################################
 class robotCompetition():
     hub = 0;
     motorLeft = 0;
     motorRight = 0;
+    wheelDiameter = 0;
     wheelC = 0;
-    D = 0;
+    axle=0
+    driveBase=0;
     configurationCorrect = False;
 
     def testConfig(self):
@@ -118,7 +128,7 @@ class robotCompetition():
         return self.configurationCorrect
 
     def __init__(self):
-        self.hub = InventorHub(front_side=-Axis.X,top_side=-Axis.Z);
+        self.hub = InventorHub(front_side=-Axis.X,top_side=Axis.Z);
         self.hub.display.orientation(up=Side.RIGHT)
         self.hub.display.icon(Icon.CIRCLE)
         if (self.testConfig()):
@@ -130,8 +140,34 @@ class robotCompetition():
     # Save your colors.
             self.colorSensor.detectable_colors(my_colors)
 
-        # blue : 87m.5 m
+        # blue : 87.5 m
         # black-motorcycle:81.6
-        self.wheelC = 81.6 * umath.pi; #mm 
-        self.D = 88; #mm
+            self.wheelDiameter = 79.78; # diameter, mm
+            self.wheelC = self.wheelDiameter * umath.pi; #mm 
+            self.axle = 89; #88; #mm
+ #           self.driveBase = DriveBase(self.motorLeft, self.motorRight, wheel_diameter=self.wheelD, axle_track=self.D)
+ #           self.driveBase.use_gyro(True)
+ #           self.driveBase.reset(0,0)
+ #           print("drivebase:",self.driveBase.settings())
+            print("init complete")
+        print("init done")
 
+    def runStraight(self,speed,distance):
+        self.driveBase.settings(speed,1000,300,1200); # speed, accel, angular speed, angular accel
+        print("runStraight start:",self.driveBase.distance())
+        self.driveBase.straight(distance,then=Stop.HOLD,wait=True)
+        while not self.driveBase.done():
+            wait(10)
+        print("runStraight end:",self.driveBase.distance())
+    
+    def rotate(self,degrees):
+        self.driveBase.settings(500,1000,300,1200); # speed, accel, angular speed, angular accel
+        print("rotate start:",self.driveBase.angle())
+        self.driveBase.turn(degrees,then=Stop.HOLD, wait=True)
+        print("rotate start:",self.driveBase.angle())
+
+    def curve(self,radius,speed,degrees):
+        print("curve start:",self.driveBase.angle())
+        self.driveBase.settings(speed,1000,300,1200); # speed, accel, angular speed, angular accel
+        self.driveBase.arc(radius,degrees,then=Stop.HOLD, wait=True)
+        print("curve end:",self.driveBase.angle())

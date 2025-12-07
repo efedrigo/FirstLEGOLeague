@@ -1,0 +1,23 @@
+Write a micro-python script for pybricks to drive a differential drive robot with accessories. 
+The script defines a function called mission3_4 that receives as argument an object called "myRobot". 
+The object "myRobot" contains the following members:
+- motorLeft: the left motor of the differential drive robot
+- motorRight: the right motor of the differential drive robot
+- driveBase: the pybricks DriveBase already initialised
+- accessoryLeft: the motor for the left accessory
+- accessoryRight: the motor for the right accessory
+
+The script shall:
+- drive the robot straight for 900mm at 500mm/s
+- while driving, move in parallel to the motion both accessory in parallel until they reach a mechanical stop, the reset their position
+- then drive an arc of 90 degrees to the right at 50mm/s, radius 40mm.
+- while driving the arc and before the next motion, lower the left accessory to 800 degrees and the right accessory to 190 degrees
+- then move straight at 100mm/s for 50mm
+- then raise the left accessory to 750degrees and the right accessory back to 0
+- then move straight back at 100mm/s for 50mm
+- then another arc of 90 degrees to the right 
+- then fast straight 900mm to go back to the initial position
+
+Please note: 
+- the method straight in DriveBase is not blocking. 
+- the curve in the last version of pybricks is done with the method arc which is not blocking
