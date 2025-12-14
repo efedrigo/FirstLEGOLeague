@@ -54,7 +54,7 @@ def mission3_4(myRobot):
     print("start motor right")
     accessoryRight.dc(40)
     print("start motor left")
-    accessoryLeft.dc(-70)
+    accessoryLeft.dc(-50)
 
     left_stalled = False
     right_stalled = False
@@ -101,10 +101,10 @@ def mission3_4(myRobot):
     # Positive angle = right turn in the current DriveBase API.
     drive.arc(60, 90, then=Stop.HOLD, wait=False)
 
-    wait(1000)
+    wait(300)
     # Lower accessories in parallel to the arc.
-    accessoryLeft.run_target(400, 105, then=Stop.HOLD, wait=False)
-    accessoryRight.run_target(400, -200, then=Stop.HOLD, wait=False)
+    accessoryLeft.run_target(500, 460, then=Stop.HOLD, wait=False)
+    accessoryRight.run_target(500, -120, then=Stop.HOLD, wait=False)
 
     # Wait until both the arc and the accessory motions are done.
     while (not drive.done() or
@@ -125,8 +125,8 @@ def mission3_4(myRobot):
     # ----------------------------------------------------------------------
     # 4) Raise left accessory to 750° and right accessory back to 0°.
     # ----------------------------------------------------------------------
-    accessoryLeft.run_target(200, 100, then=Stop.HOLD, wait=False)
-    accessoryRight.run_target(200, -60, then=Stop.HOLD, wait=False)
+    accessoryLeft.run_target(200, 400, then=Stop.HOLD, wait=False)
+    accessoryRight.run_target(200, -20, then=Stop.HOLD, wait=False)
 
     while not (accessoryLeft.done() and accessoryRight.done()):
         wait(10)

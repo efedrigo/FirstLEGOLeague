@@ -15,6 +15,7 @@ from testPursuit import testPursuit
 from mission1 import mission1
 from mission3_4 import mission3_4
 from mission9 import mission9
+from mission7 import mission7
 
 watch = StopWatch()
 myRobot = robotCompetition()
@@ -29,7 +30,8 @@ MissionTable = [[Color.NONE,0,program0], # config test
                 [Color.BEIGE,3,testPursuit], # test trajectory tracking
                 [Color.YELLOW,4,mission1],
                 [Color.BLACK,5,mission3_4],
-                [Color.MAGENTA,6,mission9]
+#                [Color.MAGENTA,6,mission9],
+                [Color.MAGENTA,7,mission7],
                 ]  
 
 for mission in MissionTable:
