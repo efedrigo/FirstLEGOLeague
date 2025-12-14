@@ -1,4 +1,3 @@
-
 """MicroPython mission script for Pybricks.
 
 Provides `mission1(myRobot)` which runs the sequence requested by the user.
@@ -28,7 +27,7 @@ MEDIUM_SPEED = 300
 SLOW_SPEED = 100
 DISTANCE1 = 630
 
-def mission1(myRobot):
+def mission7(myRobot):
     """Run mission 1 using `myRobot` components.
 
     Follows the exact sequence requested. Accessory sign variables allow
@@ -37,7 +36,7 @@ def mission1(myRobot):
 
     # accessory direction signs (start with negative as requested)
     accessory_left_sign = -1
-    accessory_right_sign = 1
+    accessory_right_sign = -1
 
     # Initialize DriveBase (pass gyro if available)
     drive = DriveBase(
@@ -48,7 +47,7 @@ def mission1(myRobot):
     )
 
     # --- 1) Fast drive straight 620 mm while moving both accessories to mechanical stop ---
-    drive.reset()  # zero distance measurement
+ #   drive.reset()  # zero distance measurement
     drive.use_gyro(True)
     drive.settings(straight_speed=FAST_SPEED, straight_acceleration=2 * FAST_SPEED)
 
@@ -57,7 +56,7 @@ def mission1(myRobot):
     myRobot.accessoryRight.dc(-accessory_right_sign * 50)
 
     # Non-blocking straight move
-    drive.straight(DISTANCE1, then=Stop.BRAKE, wait=False)
+    drive.arc(-100, 90, then=Stop.HOLD, wait=False) #radius, angle
 
     # Wait until both accessories reach their mechanical stops (stalled())
     left_stalled = False
@@ -74,50 +73,60 @@ def mission1(myRobot):
         wait(10)
 
     # Ensure the drive finished as well (poll distance)
-    while abs(drive.distance()) < DISTANCE1:
+    while not drive.done():
         wait(10)
 
     # stop accessories (safety) and ensure angle zeroed
-    myRobot.accessoryLeft.stop()
-    myRobot.accessoryRight.stop()
-    myRobot.accessoryLeft.reset_angle(0)
-    myRobot.accessoryRight.reset_angle(0)
+ #   myRobot.accessoryLeft.stop()
+ #   myRobot.accessoryRight.stop()
+ #   myRobot.accessoryLeft.reset_angle(0)
+ #   myRobot.accessoryRight.reset_angle(0)
 
     # --- 2) Turn left 90 degrees (blocking) ---
-    drive.turn(-90)
+ #   drive.turn(-90)
 
     # --- 3) Slow move straight (medium speed) 250 mm (blocking) ---
     drive.settings(straight_speed=MEDIUM_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
     drive.straight(220)
 
+    # Non-blocking straight move
+    drive.arc(100, 90, then=Stop.HOLD, wait=True) #radius, angle
+    drive.straight(150)
+    drive.turn(-10)
+    myRobot.accessoryLeft.run_target(550, accessory_left_sign * 800, wait=True)
+    drive.straight(10)
+
     # --- 4) Lower left accessory to 100° (blocking, no robot motion) ---
     # run_target(speed_deg_per_s, angle_deg)
-    myRobot.accessoryLeft.run_target(600, accessory_left_sign * 800, wait=True)
 
     # --- 5) Raise left accessory to 0° (blocking) ---
-    myRobot.accessoryLeft.run_target(600, accessory_left_sign * 0, wait=True)
+    myRobot.accessoryRight.run_target(1000, accessory_right_sign * 800, wait=True)
 
     # --- 6) Slow move straight back 200 mm (blocking) ---
-    drive.straight(-150)
+    drive.settings(straight_speed=SLOW_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
+    drive.straight(-25)
+    # --- 5) Raise left accessory to 0° (blocking) ---
+    myRobot.accessoryRight.run_target(400, accessory_right_sign * 700, wait=True)
+#    drive.turn(60)
+#    drive.straight(-300)
 
     # --- 7) Turn 45° to the right (blocking) ---
-    drive.turn(45)
 
     # --- 8) Lower right accessory to 100° (blocking) ---
-    myRobot.accessoryRight.run_target(400, accessory_right_sign * 180, wait=True)
+    #myRobot.accessoryRight.run_target(400, accessory_right_sign * 180, wait=True)
 
     # --- 9) Move straight 200 mm at medium speed (blocking) ---
-    drive.settings(straight_speed=MEDIUM_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
-    drive.straight(200)
+    #drive.settings(straight_speed=MEDIUM_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
+    #drive.straight(200)
     # --- 10) Raise right accessory to 0° (blocking) ---
-    myRobot.accessoryRight.run_target(150, accessory_right_sign * 0, wait=True)
+    #myRobot.accessoryRight.run_target(150, accessory_right_sign * 0, wait=True)
 
-    drive.settings(straight_speed=SLOW_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
-    drive.straight(100)
+    #drive.settings(straight_speed=SLOW_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
+    #drive.straight(100)
 
 
     # --- 11) Move straight back 200 mm at medium speed (blocking) ---
-    drive.straight(-200)
+   # drive.straight(-200)
 
     # --- 12) Turn towards initial heading (assume DriveBase.angle() available) ---
     # If DriveBase provides `angle()` (current heading), use it. Otherwise this step
@@ -127,15 +136,15 @@ def mission1(myRobot):
 #        drive.turn(-current_heading+15)
 #    except Exception:
         # Fallback: assume net heading after previous ops is +45 degrees left, undo it
-    drive.turn(60)
+   # drive.turn(60)
 
     # --- 13) Fast move straight to return approximately to the initial position ---
     # We assume returning along original heading back by 620 mm (undo initial forward)
-    drive.settings(straight_speed=FAST_SPEED, straight_acceleration=2 * FAST_SPEED)
-    drive.straight(-DISTANCE1)
+  #  drive.settings(straight_speed=FAST_SPEED, straight_acceleration=2 * FAST_SPEED)
+  #  drive.straight(-DISTANCE1)
 
     # Ensure accessories are stopped at the end
-    myRobot.accessoryLeft.stop()
-    myRobot.accessoryRight.stop()
+ #   myRobot.accessoryLeft.stop()
+#    myRobot.accessoryRight.stop()
 
     return

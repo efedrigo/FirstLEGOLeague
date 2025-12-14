@@ -9,26 +9,27 @@ The object "myRobot" contains the following members:
 - wheelDiameter: the diameter of each wheel
 
 When generating the script use the following instructions:
-- when moving the accessories and the wheels in parallel, use the non-blocking version of "straight" or "arc" or "turn"
 - do not use "curve" to drive an arc, since this function has been replaced by "arc".
+- when moving the accessories and the wheels in parallel, use the non-blocking version of "straight" or "arc" or "turn"
 - if no parallel motion of the accessories is needed, use the blocking version of "straight", "arc" or "turn"
 - run_until_stalled is blocking so you cannot move two accessories in parallel. Use "dc" instead, with a duty cycle of 50%
-- use a negative dc duty cycle for the left accessory 
+- for the accessory motions, adds a variable for each motor so that the sign can be customised
+- for this script, start with a negative sign for both accessory motors 
 - pybricks does not have the library "math" available, use "umath" instead
 - define 3 speed levels: fast at 600 mm/s, medium at 300 mm/s and slow at 100 mm/s
 
 The script shall:
-- initialise the pybricks DriveBase object
-- fast drive the robot straight for 400mm 
+- initialise the pybricks DriveBase object, make sure the gyroscope is used to control motion
+- fast drive the robot straight for 620mm 
 - while driving, move in parallel to the motion both accessory in parallel until they reach a mechanical stop, the reset their position
-- then drive an arc of 45 degrees to the right at the same speed, radius 100mm smoothly after the previous drive
-- then drive an arc of 135 degrees to the left at the same speed, radius 100mm smoothly after the previous drive
-- then slow move straight for 250mm
+- ensure the accessories reach the mechanical stop before driving further
+- turn the robot 90 degrees to the left
+- then slow move straight at medium speed for 250mm
 - then lower the left accessory to 100 degrees, without moving
 - then raise the left accessory to 0 degrees, without moving
 - then slow move straight back for 200mm
 - then turn 45 degrees to the right 
-- then lower the right accessory to -100 degrees
+- then lower the right accessory to 100 degrees
 - then move straight 200mm at medium speed
 - then raise the right accessory to 0 degrees, without moving
 - then move straight back 200mm at medium speed
