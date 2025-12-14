@@ -40,12 +40,13 @@ def mission1(myRobot):
     accessory_right_sign = 1
 
     # Initialize DriveBase (pass gyro if available)
-    drive = DriveBase(
-        myRobot.motorLeft,
-        myRobot.motorRight,
-        myRobot.wheelDiameter,
-        myRobot.axle
-    )
+    drive = myRobot.driveBase
+    #DriveBase(
+    #    myRobot.motorLeft,
+    #    myRobot.motorRight,
+    #    myRobot.wheelDiameter,
+    #    myRobot.axle
+    #)
 
     # --- 1) Fast drive straight 620 mm while moving both accessories to mechanical stop ---
     drive.reset()  # zero distance measurement

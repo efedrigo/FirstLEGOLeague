@@ -25,7 +25,7 @@ def mission3_4(myRobot):
     motorRight = myRobot.motorRight; #Motor(Port.B,positive_direction=Direction.COUNTERCLOCKWISE);
     accessoryLeft = myRobot.accessoryLeft; #Motor(Port.C,positive_direction=Direction.COUNTERCLOCKWISE);
     accessoryRight = myRobot.accessoryRight; #Motor(Port.D,positive_direction=Direction.CLOCKWISE);
-    drive = DriveBase(motorLeft, motorRight, wheel_diameter=wheelD, axle_track=D)
+    drive = myRobot.driveBase; #DriveBase(motorLeft, motorRight, wheel_diameter=wheelD, axle_track=D)
     drive.use_gyro(True)
     drive.reset(0,0)
 

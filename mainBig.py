@@ -30,7 +30,7 @@ MissionTable = [[Color.NONE,0,program0], # config test
                 [Color.BEIGE,3,testPursuit], # test trajectory tracking
                 [Color.YELLOW,4,mission1],
                 [Color.BLACK,5,mission3_4],
-                [Color.MAGENTA,6,mission9],
+                [Color.MAGENTA,6,mission7],
                 [Color.LIGHTBLUE,7,mission1]
                 ]  
 
