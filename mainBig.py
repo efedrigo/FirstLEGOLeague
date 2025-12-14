@@ -6,7 +6,7 @@ from pybricks.tools import wait, StopWatch, multitask, run_task
 from pybricks.parameters import Axis
 import umath
 
-from robot import robotCompetitionCompact
+from robot import robotCompetition
 #from odometer import odometer
 
 from testConfig import program1, program0
@@ -18,7 +18,7 @@ from mission9 import mission9
 from mission7 import mission7
 
 watch = StopWatch()
-myRobot = robotCompetitionCompact()
+myRobot = robotCompetition()
 #myOdometer = odometer(myRobot,watch);
 
 color = myRobot.colorSensor.color()
