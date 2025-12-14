@@ -6,7 +6,7 @@ from pybricks.tools import wait, StopWatch, multitask, run_task
 from pybricks.parameters import Axis
 import umath
 
-from robot import robotCompetition
+from robot import robotCompetitionCompact
 #from odometer import odometer
 
 from testConfig import program1, program0
@@ -17,7 +17,7 @@ from mission3_4 import mission3_4
 from mission9 import mission9
 
 watch = StopWatch()
-myRobot = robotCompetition()
+myRobot = robotCompetitionCompact()
 #myOdometer = odometer(myRobot,watch);
 
 color = myRobot.colorSensor.color()
@@ -29,7 +29,8 @@ MissionTable = [[Color.NONE,0,program0], # config test
                 [Color.BEIGE,3,testPursuit], # test trajectory tracking
                 [Color.YELLOW,4,mission1],
                 [Color.BLACK,5,mission3_4],
-                [Color.MAGENTA,6,mission9]
+                [Color.MAGENTA,6,mission9],
+                [Color.LIGHTBLUE,7,mission1]
                 ]  
 
 for mission in MissionTable:

@@ -94,28 +94,39 @@ class robotCompetition():
                     raise
 
     # Get the device id
+        # id 49 : new large motor
+        # id 48 : new medium motor
+        # id 75 : old medium motor
             id = device.info()["id"]
             if (port == Port.A):        
                 if (id == 49):
-                    print(port,": Large motor,correct")
+                    print(port,": New large motor,correct")
+                elif (id == 75):
+                    print(port,": Old medium motor,correct")
                 else:
-                    print("Port A is not connected to a Large motor, id: ",id)
+                    print("Port A is not connected to a new large or old medium motor, id: ",id)
                     self.configurationCorrect = False
             elif (port ==Port.B):        
                 if (id == 49):
-                    print(port,": Large motor, correct")
+                    print(port,": New large motor,correct")
+                elif (id == 75):
+                    print(port,": Old medium motor,correct")
                 else:
-                    print("Port B is not connected to a Large motor, id: ",id)
+                    print("Port B is not connected to a new large or old medium motor, id: ",id)
                     self.configurationCorrect = False
             elif (port == Port.C):        
                 if (id == 48):
-                    print(port,": Medium motor, correct")
+                    print(port,": New medium motor, correct")
+                elif (id == 75):
+                    print(port,": Old medium motor,correct")
                 else:
                     print("Port C is not connected to a medium motor, id: ",id)
                     self.configurationCorrect = False
             elif (port == Port.D):        
                 if (id == 48):
-                    print(port,": Medium motor, correct")
+                    print(port,": New medium motor, correct")
+                elif (id == 75):
+                    print(port,": Old medium motor,correct")
                 else:
                     print("Port D is not connected to a medium motor, id: ",id)
                     self.configurationCorrect = False;
@@ -143,6 +154,132 @@ class robotCompetition():
         # blue : 87.5 m
         # black-motorcycle:81.6
             self.wheelDiameter = 79.78; # diameter, mm
+            self.wheelC = self.wheelDiameter * umath.pi; #mm 
+            self.axle = 89; #88; #mm
+ #           self.driveBase = DriveBase(self.motorLeft, self.motorRight, wheel_diameter=self.wheelD, axle_track=self.D)
+ #           self.driveBase.use_gyro(True)
+ #           self.driveBase.reset(0,0)
+ #           print("drivebase:",self.driveBase.settings())
+            print("init complete")
+        print("init done")
+
+    def runStraight(self,speed,distance):
+        self.driveBase.settings(speed,1000,300,1200); # speed, accel, angular speed, angular accel
+        print("runStraight start:",self.driveBase.distance())
+        self.driveBase.straight(distance,then=Stop.HOLD,wait=True)
+        while not self.driveBase.done():
+            wait(10)
+        print("runStraight end:",self.driveBase.distance())
+    
+    def rotate(self,degrees):
+        self.driveBase.settings(500,1000,300,1200); # speed, accel, angular speed, angular accel
+        print("rotate start:",self.driveBase.angle())
+        self.driveBase.turn(degrees,then=Stop.HOLD, wait=True)
+        print("rotate start:",self.driveBase.angle())
+
+    def curve(self,radius,speed,degrees):
+        print("curve start:",self.driveBase.angle())
+        self.driveBase.settings(speed,1000,300,1200); # speed, accel, angular speed, angular accel
+        self.driveBase.arc(radius,degrees,then=Stop.HOLD, wait=True)
+        print("curve end:",self.driveBase.angle())
+
+##################################################
+#
+#
+#
+##################################################
+class robotCompetitionCompact():
+    hub = 0;
+    motorLeft = 0;
+    motorRight = 0;
+    wheelDiameter = 0;
+    wheelC = 0;
+    axle=0
+    driveBase=0;
+    configurationCorrect = False;
+
+    def testConfig(self):
+# Make a list of known ports.
+        ports = [Port.A, Port.B,Port.C, Port.D, Port.E,Port.F]
+
+        self.configurationCorrect = True
+
+# Go through all available ports.
+        for port in ports:
+
+    # Try to get the device, if it is attached.
+            try:
+                device = PUPDevice(port)
+            except OSError as ex:
+                if ex.args[0] == ENODEV:
+                # No device found on this port.
+                    print(port, ": empty")
+                    continue
+                else:
+                    raise
+
+    # Get the device id
+        # id 49 : new large motor
+        # id 48 : new medium motor
+        # id 75 : old medium motor
+            id = device.info()["id"]
+            if (port == Port.A):        
+                if (id == 49):
+                    print(port,": New large motor,correct")
+                elif (id == 75):
+                    print(port,": Old medium motor,correct")
+                else:
+                    print("Port A is not connected to a new large or old medium motor, id: ",id)
+                    self.configurationCorrect = False
+            elif (port ==Port.B):        
+                if (id == 49):
+                    print(port,": New large motor,correct")
+                elif (id == 75):
+                    print(port,": Old medium motor,correct")
+                else:
+                    print("Port B is not connected to a new large or old medium motor, id: ",id)
+                    self.configurationCorrect = False
+            elif (port == Port.C):        
+                if (id == 48):
+                    print(port,": New medium motor, correct")
+                elif (id == 75):
+                    print(port,": Old medium motor,correct")
+                else:
+                    print("Port C is not connected to a medium motor, id: ",id)
+                    self.configurationCorrect = False
+            elif (port == Port.D):        
+                if (id == 48):
+                    print(port,": New medium motor, correct")
+                elif (id == 75):
+                    print(port,": Old medium motor,correct")
+                else:
+                    print("Port D is not connected to a medium motor, id: ",id)
+                    self.configurationCorrect = False;
+            elif (port == Port.E):        
+                if (id == 61):
+                    print(port,": color sensor, correct")
+                else:
+                    print("Port E is not connected to a color sensor, id: ",id)
+                    self.configurationCorrect = False
+        return self.configurationCorrect
+
+    def __init__(self):
+        self.hub = InventorHub(front_side=-Axis.X,top_side=Axis.Z);
+        self.hub.display.orientation(up=Side.RIGHT)
+        self.hub.display.icon(Icon.CIRCLE)
+        if (self.testConfig()):
+            self.motorLeft = Motor(Port.A,positive_direction=Direction.CLOCKWISE);
+            self.motorRight = Motor(Port.B,positive_direction=Direction.COUNTERCLOCKWISE);
+            self.accessoryLeft = Motor(Port.C,positive_direction=Direction.COUNTERCLOCKWISE);
+            self.accessoryRight = Motor(Port.D,positive_direction=Direction.CLOCKWISE);
+            self.colorSensor = ColorSensor(Port.E)
+    # Save your colors.
+            self.colorSensor.detectable_colors(my_colors)
+
+        # blue : 87.5 m
+        # black-motorcycle:81.6
+            # self.wheelDiameter = 79.78; # diameter, mm
+            self.wheelDiameter = 43.2; # diameter, mm
             self.wheelC = self.wheelDiameter * umath.pi; #mm 
             self.axle = 89; #88; #mm
  #           self.driveBase = DriveBase(self.motorLeft, self.motorRight, wheel_diameter=self.wheelD, axle_track=self.D)
