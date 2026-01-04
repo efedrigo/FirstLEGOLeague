@@ -156,10 +156,10 @@ class robotCompetition():
             self.wheelDiameter = 79.78; # diameter, mm
             self.wheelC = self.wheelDiameter * umath.pi; #mm 
             self.axle = 89; #88; #mm
- #           self.driveBase = DriveBase(self.motorLeft, self.motorRight, wheel_diameter=self.wheelD, axle_track=self.D)
- #           self.driveBase.use_gyro(True)
- #           self.driveBase.reset(0,0)
- #           print("drivebase:",self.driveBase.settings())
+            self.driveBase = DriveBase(self.motorLeft, self.motorRight, wheel_diameter=self.wheelD, axle_track=self.D)
+            self.driveBase.use_gyro(True)
+            self.driveBase.reset(0,0)
+            print("drivebase:",self.driveBase.settings())
             print("init complete")
         print("init done")
 
@@ -282,10 +282,10 @@ class robotCompetitionCompact():
             self.wheelDiameter = 43.2; # diameter, mm
             self.wheelC = self.wheelDiameter * umath.pi; #mm 
             self.axle = 89; #88; #mm
- #           self.driveBase = DriveBase(self.motorLeft, self.motorRight, wheel_diameter=self.wheelD, axle_track=self.D)
- #           self.driveBase.use_gyro(True)
- #           self.driveBase.reset(0,0)
- #           print("drivebase:",self.driveBase.settings())
+            self.driveBase = DriveBase(self.motorLeft, self.motorRight, wheel_diameter=self.wheelDiameter, axle_track=self.axle)
+            self.driveBase.use_gyro(True)
+            self.driveBase.reset(0,0)
+            print("drivebase:",self.driveBase.settings())
             print("init complete")
         print("init done")
 

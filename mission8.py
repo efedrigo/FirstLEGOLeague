@@ -1,7 +1,7 @@
 
 """MicroPython mission script for Pybricks.
 
-Provides `mission1(myRobot)` which runs the sequence requested by the user.
+Provides `mission8(myRobot)` which runs the sequence requested by the user.
 
 Expect `myRobot` to expose:
  - `motorLeft`, `motorRight` (pybricks Motor objects)
@@ -37,7 +37,7 @@ def mission8(myRobot):
 
     # accessory direction signs (start with negative as requested)
     accessory_left_sign = -1
-    accessory_right_sign = 1
+    accessory_right_sign = -1
 
     # Initialize DriveBase (pass gyro if available)
     drive = myRobot.driveBase
