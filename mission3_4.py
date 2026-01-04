@@ -99,12 +99,12 @@ def mission3_4(myRobot):
     drive.settings(200, 100, 200, 100)
 
     # Positive angle = right turn in the current DriveBase API.
-    drive.arc(60, 90, then=Stop.HOLD, wait=False)
+    drive.arc(70, 90, then=Stop.HOLD, wait=False)
 
     wait(300)
     # Lower accessories in parallel to the arc.
-    accessoryLeft.run_target(500, 460, then=Stop.HOLD, wait=False)
-    accessoryRight.run_target(500, -120, then=Stop.HOLD, wait=False)
+    accessoryLeft.run_target(500, 480, then=Stop.HOLD, wait=False)
+    accessoryRight.run_target(500, -200, then=Stop.HOLD, wait=False)
 
     # Wait until both the arc and the accessory motions are done.
     while (not drive.done() or
@@ -112,53 +112,29 @@ def mission3_4(myRobot):
         wait(10)
 
     # ----------------------------------------------------------------------
-    # 3) Straight 50 mm at 100 mm/s.
+    # 3) move slowly towards target
     # ----------------------------------------------------------------------
     drive.settings(80, 100, 90, 90)
 #    drive.use_gyro(False)
-    drive.straight(150, then=Stop.HOLD, wait=True)
-#    drive.use_gyro(True)
+    drive.straight(180, then=Stop.HOLD, wait=True)
+#    accessoryLeft.run_target(500, 470, then=Stop.HOLD, wait=False)
+    drive.settings(100, 100, 200, 100)
+    
+    # get object
+    # raise sliglhtly
+    accessoryLeft.run_target(500, 470, then=Stop.HOLD, wait=False)
+    # raise Indiana Jones
+    accessoryRight.run_target(1000, 10, then=Stop.HOLD, wait=True)
+    wait(1000)
+    accessoryRight.run_target(300, -150, then=Stop.HOLD, wait=True)
 
-#    while not drive.done():
-#        wait(10)
+    # exit backwards
+    drive.straight(-200, then=Stop.HOLD, wait=True)
+    drive.turn(100)
 
-    # ----------------------------------------------------------------------
-    # 4) Raise left accessory to 750° and right accessory back to 0°.
-    # ----------------------------------------------------------------------
-    accessoryLeft.run_target(200, 400, then=Stop.HOLD, wait=False)
-    accessoryRight.run_target(200, -20, then=Stop.HOLD, wait=False)
+    drive.settings(500, 500, 180, 180)  # straight_speed, straight_accel, turn_rate, turn_accel
+    drive.straight(840, then=Stop.HOLD, wait=True)
 
-    while not (accessoryLeft.done() and accessoryRight.done()):
-        wait(10)
-
-    # ----------------------------------------------------------------------
-    # 5) Move straight BACK 50 mm at 100 mm/s.
-    # ----------------------------------------------------------------------
-    drive.straight(-170, then=Stop.HOLD, wait=True)
-
-#    while not drive.done():
-#        wait(10)
-
-    # ----------------------------------------------------------------------
-    # 6) Another arc of 90° to the RIGHT (radius 40 mm, 50 mm/s).
-    # ----------------------------------------------------------------------
-    drive.settings(300, 300, 300, 300)
-    accessoryLeft.run_target(300, 80, then=Stop.HOLD, wait=False)
-    drive.turn(95, then=Stop.HOLD, wait=True)
-
- #   while not drive.done():
-  #      wait(10)
-
-    # ----------------------------------------------------------------------
-    # 7) Fast straight 900 mm to go back towards the initial position
-    #    at 500 mm/s.
-    # ----------------------------------------------------------------------
-    drive.settings(500, 500, 180, 180)
-    drive.straight(800, then=Stop.HOLD, wait=True)
-
-#    while not drive.done():
-#        wait(10)
-
-    # Final stop to fully deactivate the drive base.
     drive.stop()
+    # Final stop to fully deactivate the drive base.
 
