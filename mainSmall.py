@@ -1,4 +1,4 @@
-rom pybricks.hubs import InventorHub
+from pybricks.hubs import InventorHub
 from pybricks.pupdevices import Motor, ColorSensor, UltrasonicSensor
 from pybricks.parameters import Button, Color, Direction, Port, Side, Stop
 from pybricks.robotics import DriveBase
@@ -16,6 +16,7 @@ from mission1 import mission1
 from mission3_4 import mission3_4
 from mission9 import mission9
 from mission7 import mission7
+from mission8 import mission8
 
 watch = StopWatch()
 myRobot = robotCompetitionCompact()
@@ -31,7 +32,7 @@ MissionTable = [[Color.NONE,0,program0], # config test
                 [Color.YELLOW,4,mission1],
                 [Color.BLACK,5,mission3_4],
                 [Color.MAGENTA,6,mission7],
-                [Color.LIGHTBLUE,7,mission8]
+                [Color.DARKBLUE,7,mission8]
                 ]  
 
 for mission in MissionTable:

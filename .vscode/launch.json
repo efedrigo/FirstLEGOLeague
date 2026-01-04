@@ -6,7 +6,8 @@
             "type": "debugpy",
             "request": "launch",
             "module": "pybricksdev",
-            "args": ["run", "ble", "${file}"],
+            "args-unused": ["run", "-n", "Unbrickables1", "ble", "${file}"],
+            "args": ["run", "-n", "RoboTo", "ble", "${file}"],
         }
     ]
 }

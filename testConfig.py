@@ -8,7 +8,7 @@ import umath
 
 from robot import robotCompetition
 
-def program0(myRobot,myOdometer):
+def program0(myRobot):
     wait(1000)
     if (myRobot.testConfig()):
         myRobot.hub.display.icon(Icon.HAPPY)
@@ -17,7 +17,7 @@ def program0(myRobot,myOdometer):
     wait(1000)
 
 
-def program1(myRobot,myOdometer):
+def program1(myRobot):
 
     wait(1000)
 
