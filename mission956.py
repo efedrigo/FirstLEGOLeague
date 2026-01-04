@@ -30,7 +30,12 @@ def mission956(myRobot):
     drive.straight(960, then=Stop.BRAKE, wait=True)
     drive.turn(45)
     drive.settings(straight_speed=200, straight_acceleration=2 * FAST_SPEED)
-    drive.straight(250, then=Stop.BRAKE, wait=True)
+    drive.straight(300, then=Stop.BRAKE, wait=True)
+    drive.straight(-100, then=Stop.BRAKE, wait=True)
+    drive.turn(-30)
+    drive.straight(600, then=Stop.BRAKE, wait=True)
+    drive.turn(60)
+    drive.straight(-200, then=Stop.BRAKE, wait=True)
 
 
 

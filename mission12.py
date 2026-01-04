@@ -26,14 +26,18 @@ def mission12(myRobot):
 
     drive.straight(DISTANCE1, then=Stop.BRAKE, wait=True)
     wait(0)
-    drive.turn(10, then=Stop.BRAKE, wait=True) 
+    drive.turn(5, then=Stop.BRAKE, wait=True) 
   
     wait(0.000000001)
     
     drive.straight(10, then=Stop.BRAKE, wait=True)
     wait(10)
     drive.turn(5, then=Stop.BRAKE, wait=True) 
-    drive.straight(10, then=Stop.BRAKE, wait=True)
+    drive.straight(20, then=Stop.BRAKE, wait=True)
+    drive.turn(3, then=Stop.BRAKE, wait=True)
+    drive.straight(17, then=Stop.BRAKE, wait=True)
+    drive.turn(3, then=Stop.BRAKE, wait=True)
+    drive.straight(50, then=Stop.BRAKE, wait=True)
     drive.settings(straight_speed=FAST_SPEED, straight_acceleration=2 * FAST_SPEED)
     #drive.straight(-DISTANCE2)
 
