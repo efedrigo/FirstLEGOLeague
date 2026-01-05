@@ -25,8 +25,19 @@ watch = StopWatch()
 myRobot = robotCompetitionCompact()
 #myOdometer = odometer(myRobot,watch);
 
+# START DEBUG
+mybrightness = 100
+while mybrightness>0:
+        myRobot.colorSensor.lights.on(mybrightness)
+        wait(1000)
+        color = myRobot.colorSensor.color()
+        print("sensed color:",color,"at brightness:",mybrightness,"%")
+        mybrightness = mybrightness - 10
+# END DEBUG
+
 color = myRobot.colorSensor.color()
 print("sensed color:",color)
+
 
 MissionTable = [[Color.NONE,0,program0], # config test
                 [Color.LIGHTBROWN,1,program1], # test configuration with motion
@@ -37,7 +48,7 @@ MissionTable = [[Color.NONE,0,program0], # config test
                 [Color.MAGENTA,6,mission10],
                 [Color.LIGHTBLUE,7,mission8],
                 [Color.DARKBLUE,8,mission8],
-                [Color.WHITE,9,mission12],
+                [Color.WHITE,9,mission956], #was mission12
                 [Color.ROSE,10,mission956],
                 ]   
 

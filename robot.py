@@ -266,8 +266,9 @@ class robotCompetitionCompact():
         return self.configurationCorrect
 
     def __init__(self):
-        self.hub = InventorHub(front_side=-Axis.X,top_side=Axis.Z);
-        self.hub.display.orientation(up=Side.RIGHT)
+        #self.hub = InventorHub(front_side=-Axis.X,top_side=Axis.Z); # large robot
+        self.hub = InventorHub(top_side=-Axis.Y, front_side=Axis.Z); # small robot
+        self.hub.display.orientation(up=Side.TOP)
         self.hub.display.icon(Icon.CIRCLE)
         if (self.testConfig()):
             self.motorLeft = Motor(Port.A,positive_direction=Direction.CLOCKWISE);
