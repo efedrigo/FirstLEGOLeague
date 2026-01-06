@@ -16,6 +16,8 @@ Notes:
  - Uses `dc(...)` (50%) for accessory parallel motion to find mechanical stops.
 """
 
+""" 20260105: Martello di Thor v1 (prima prova: alza e abbassa indefinitamente)"""
+
 from pybricks.robotics import DriveBase
 from pybricks.parameters import Stop
 from pybricks.tools import wait
@@ -51,14 +53,11 @@ def mission8(myRobot):
     # --- 1) Fast drive straight 620 mm while moving both accessories to mechanical stop ---
     drive.reset()  # zero distance measurement
     drive.use_gyro(True)
-    drive.settings(straight_speed=FAST_SPEED, straight_acceleration=2 * FAST_SPEED)
+    drive.settings(straight_speed=MEDIUM_SPEED, straight_acceleration=FAST_SPEED)
 
     # Start accessories using dc (non-blocking); use duty cycle 50%
-    myRobot.accessoryLeft.dc(-accessory_left_sign * 40)
-    myRobot.accessoryRight.dc(-accessory_right_sign * 50)
-    wait(500)
-    myRobot.accessoryLeft.stop()
-    myRobot.accessoryRight.stop()
+    myRobot.accessoryLeft.dc(-accessory_left_sign * 79)
+    myRobot.accessoryRight.dc(-accessory_right_sign * 79)
 
     # Non-blocking straight move
     drive.straight(DISTANCE1, then=Stop.BRAKE, wait=False)
