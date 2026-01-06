@@ -73,18 +73,18 @@ def mission8(myRobot):
     drive.settings(straight_speed=MEDIUM_FAST_SPEED, straight_acceleration=FAST_SPEED)
 
     drive.turn(-90)
-    drive.straight(138, then=Stop.BRAKE, wait=True)
+    drive.straight(148, then=Stop.BRAKE, wait=True)
     drive.turn(-50)
     drive.straight(100, then=Stop.BRAKE, wait=True)
 
-# --- 3) Fai girare la ruota x portare su un tesoro
-
+# --- 3) Torna alla base
     drive.reset()  # zero distance measurement
     drive.use_gyro(True)
     drive.settings(straight_speed=MEDIUM_FAST_SPEED, straight_acceleration=FAST_SPEED)
 
-    drive.turn(-10) # da testare
-    drive.straight(100, then=Stop.BRAKE, wait=True)
+    drive.turn(-68) # da testare
+    drive.straight(300, then=Stop.BRAKE, wait=True)
+
     return
     #####END
 
