@@ -24,9 +24,10 @@ import umath as umath
 
 # Speed levels (mm/s)
 FAST_SPEED = 500
+MEDIUM_FAST_SPEED = 400
 MEDIUM_SPEED = 300
 SLOW_SPEED = 100
-DISTANCE1 = 630
+DISTANCE1 = 420
 
 def mission8(myRobot):
     """Run mission 8 using `myRobot` components.
@@ -51,29 +52,42 @@ def mission8(myRobot):
     # --- 1) Fast drive straight 620 mm while moving both accessories to mechanical stop ---
     drive.reset()  # zero distance measurement
     drive.use_gyro(True)
-    drive.settings(straight_speed=MEDIUM_SPEED, straight_acceleration=FAST_SPEED)
+    drive.settings(straight_speed=MEDIUM_FAST_SPEED, straight_acceleration=FAST_SPEED)
 
     # Start accessories using dc (non-blocking); use duty cycle 50%
-    myRobot.accessoryLeft.dc(-accessory_left_sign * 79)
+    myRobot.accessoryLeft.reset_angle(0)
+    myRobot.accessoryRight.reset_angle(0)
+
+    
+    drive.straight(DISTANCE1, then=Stop.BRAKE, wait=True)
+
+
+    #myRobot.accessoryLeft.dc(-accessory_left_sign * 79)
     myRobot.accessoryRight.dc(-accessory_right_sign * 79)
+    wait(5500)
 
+    myRobot.accessoryRight.turn(90)
+    #myRobot.accessoryLeft.stop()
+    myRobot.accessoryRight.stop()
+    
     # Non-blocking straight move
-    drive.straight(DISTANCE1, then=Stop.BRAKE, wait=False)
 
+    return
     # Wait until both accessories reach their mechanical stops (stalled())
-    left_stalled = False
-    right_stalled = False
-    while not (left_stalled and right_stalled):
-        if not left_stalled and myRobot.accessoryLeft.stalled():
-            myRobot.accessoryLeft.stop()
-            myRobot.accessoryLeft.reset_angle(0)
-            left_stalled = True
-        if not right_stalled and myRobot.accessoryRight.stalled():
-            myRobot.accessoryRight.stop()
-            myRobot.accessoryRight.reset_angle(0)
-            right_stalled = True
-        wait(10)
+    #left_stalled = False
+    #right_stalled = False
+    #while not (left_stalled and right_stalled):
+    #    if not left_stalled and myRobot.accessoryLeft.stalled():
+    #        myRobot.accessoryLeft.stop()
+    #        myRobot.accessoryLeft.reset_angle(0)
+    #        left_stalled = True
+    #    if not right_stalled and myRobot.accessoryRight.stalled():
+    #        myRobot.accessoryRight.stop()
+    #        myRobot.accessoryRight.reset_angle(0)
+    #        right_stalled = True
+    #    wait(10)
 
+    return
     # Ensure the drive finished as well (poll distance)
     while abs(drive.distance()) < DISTANCE1:
         wait(10)
