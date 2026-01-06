@@ -15,7 +15,7 @@ Notes:
  - Uses non-blocking drive when accessories move in parallel.
  - Uses `dc(...)` (50%) for accessory parallel motion to find mechanical stops.
 """
-
+#####START
 from pybricks.robotics import DriveBase
 from pybricks.parameters import Stop
 from pybricks.tools import wait
@@ -27,7 +27,7 @@ FAST_SPEED = 500
 MEDIUM_FAST_SPEED = 400
 MEDIUM_SPEED = 300
 SLOW_SPEED = 100
-DISTANCE1 = 420
+DISTANCE1 = 410
 
 def mission8(myRobot):
     """Run mission 8 using `myRobot` components.
@@ -42,21 +42,15 @@ def mission8(myRobot):
 
     # Initialize DriveBase (pass gyro if available)
     drive = myRobot.driveBase
-    #DriveBase(
-    #    myRobot.motorLeft,
-    #    myRobot.motorRight,
-    #    myRobot.wheelDiameter,
-    #    myRobot.axle
-    #)
-
-    # --- 1) Fast drive straight 620 mm while moving both accessories to mechanical stop ---
+   
+    # --- 1) vai avanti e dai delle martellate ---
     drive.reset()  # zero distance measurement
     drive.use_gyro(True)
     drive.settings(straight_speed=MEDIUM_FAST_SPEED, straight_acceleration=FAST_SPEED)
 
     # Start accessories using dc (non-blocking); use duty cycle 50%
-    myRobot.accessoryLeft.reset_angle(0)
-    myRobot.accessoryRight.reset_angle(0)
+    myRobot.accessoryLeft.reset_angle(True)
+    myRobot.accessoryRight.reset_angle(True)
 
     
     drive.straight(DISTANCE1, then=Stop.BRAKE, wait=True)
@@ -64,15 +58,46 @@ def mission8(myRobot):
 
     #myRobot.accessoryLeft.dc(-accessory_left_sign * 79)
     myRobot.accessoryRight.dc(-accessory_right_sign * 79)
-    wait(5500)
+    wait(3200) # was: 3900
+    myRobot.accessoryRight.run_target(MEDIUM_FAST_SPEED, 0, then=Stop.HOLD, wait=False)
 
-    myRobot.accessoryRight.turn(90)
+    #myRobot.accessoryRight.turn(100.0000000001)
     #myRobot.accessoryLeft.stop()
     myRobot.accessoryRight.stop()
     
     # Non-blocking straight move
 
+# --- 2) Gira a destra e spingi la leva
+    drive.reset()  # zero distance measurement
+    drive.use_gyro(True)
+    drive.settings(straight_speed=MEDIUM_FAST_SPEED, straight_acceleration=FAST_SPEED)
+
+    drive.turn(-90)
+    drive.straight(138, then=Stop.BRAKE, wait=True)
+    drive.turn(-50)
+    drive.straight(100, then=Stop.BRAKE, wait=True)
+
+# --- 3) Fai girare la ruota x portare su un tesoro
+
+    drive.reset()  # zero distance measurement
+    drive.use_gyro(True)
+    drive.settings(straight_speed=MEDIUM_FAST_SPEED, straight_acceleration=FAST_SPEED)
+
+    drive.turn(67)
+    drive.straight(100, then=Stop.BRAKE, wait=True)
     return
+    #####END
+
+
+
+
+
+
+
+
+
+
+
     # Wait until both accessories reach their mechanical stops (stalled())
     #left_stalled = False
     #right_stalled = False

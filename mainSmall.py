@@ -26,13 +26,13 @@ myRobot = robotCompetitionCompact()
 #myOdometer = odometer(myRobot,watch);
 
 # START DEBUG
-#mybrightness = 100
-#while mybrightness>0:
-#        myRobot.colorSensor.lights.on(mybrightness)
-#        wait(1000)
-#        color = myRobot.colorSensor.color()
-#        print("sensed color:",color,"at brightness:",mybrightness,"%")
-#        mybrightness = mybrightness - 10
+# mybrightness = 100
+# while mybrightness>0:
+#         myRobot.colorSensor.lights.on(mybrightness)
+#         wait(1000)
+#         color = myRobot.colorSensor.color()
+#         print("sensed color:",color,"at brightness:",mybrightness,"%")
+#         mybrightness = mybrightness - 10
 # END DEBUG
 
 color = myRobot.colorSensor.color()
