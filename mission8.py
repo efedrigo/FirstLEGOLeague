@@ -83,7 +83,7 @@ def mission8(myRobot):
     drive.use_gyro(True)
     drive.settings(straight_speed=MEDIUM_FAST_SPEED, straight_acceleration=FAST_SPEED)
 
-    drive.turn(67)
+    drive.turn(-10) # da testare
     drive.straight(100, then=Stop.BRAKE, wait=True)
     return
     #####END
