@@ -27,7 +27,7 @@ FAST_SPEED = 500
 MEDIUM_FAST_SPEED = 400
 MEDIUM_SPEED = 300
 SLOW_SPEED = 100
-DISTANCE1 = 410
+DISTANCE1 = 390 # was 410 on small robot
 
 def mission8(myRobot):
     """Run mission 8 using `myRobot` components.
@@ -49,8 +49,8 @@ def mission8(myRobot):
     drive.settings(straight_speed=MEDIUM_FAST_SPEED, straight_acceleration=FAST_SPEED)
 
     # Start accessories using dc (non-blocking); use duty cycle 50%
-    myRobot.accessoryLeft.reset_angle(True)
-    myRobot.accessoryRight.reset_angle(True)
+    myRobot.accessoryLeft.reset_angle(0)
+    myRobot.accessoryRight.reset_angle(0)
 
     
     drive.straight(DISTANCE1, then=Stop.BRAKE, wait=True)
@@ -59,7 +59,7 @@ def mission8(myRobot):
     #myRobot.accessoryLeft.dc(-accessory_left_sign * 79)
     myRobot.accessoryRight.dc(-accessory_right_sign * 79)
     wait(3200) # was: 3900
-    myRobot.accessoryRight.run_target(MEDIUM_FAST_SPEED, 0, then=Stop.HOLD, wait=False)
+    myRobot.accessoryRight.run_target(MEDIUM_FAST_SPEED, 0, then=Stop.HOLD, wait=True)
 
     #myRobot.accessoryRight.turn(100.0000000001)
     #myRobot.accessoryLeft.stop()

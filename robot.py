@@ -208,6 +208,8 @@ class robotCompetition():
 
         new_angle = self.driveBase.angle();
         print("rotate end:",new_angle)
+        self.driveBase.reset(0,new_angle)
+        
 
 
     def curve(self,radius,speed,degrees):
