@@ -175,9 +175,40 @@ class robotCompetition():
     
     def rotate(self,degrees):
         self.driveBase.settings(500,1000,300,1200); # speed, accel, angular speed, angular accel
-        print("rotate start:",self.driveBase.angle())
+        actual_angle=self.driveBase.angle();   
+        print("rotate start:",actual_angle)
         self.driveBase.turn(degrees,then=Stop.HOLD, wait=True)
-        print("rotate start:",self.driveBase.angle())
+
+        new_angle = self.driveBase.angle();
+        print("rotate end:",new_angle)
+        if (abs(new_angle-actual_angle) < abs(degrees)-1):
+            print("rotate incomplete, retrying")
+            self.driveBase.turn(degrees-(new_angle-actual_angle),then=Stop.HOLD, wait=True)
+
+        new_angle = self.driveBase.angle();
+        print("rotate end:",new_angle)
+
+    def rotateAbs(self,degrees):
+        self.driveBase.settings(500,1000,300,1200); # speed, accel, angular speed, angular accel
+        actual_angle=self.driveBase.angle();   
+        target=degrees-actual_angle
+
+        print("rotate start:",actual_angle)
+        self.driveBase.turn(target,then=Stop.HOLD, wait=True)
+
+        new_angle = self.driveBase.angle();
+        print("rotate end:",new_angle)
+        i=0
+        while (abs(new_angle-degrees)>1 and i<5):
+            print("rotate incomplete, retrying:",degrees-new_angle)
+            self.driveBase.turn(degrees-new_angle,then=Stop.HOLD, wait=True)
+            new_angle = self.driveBase.angle();
+            print("rotate end:",new_angle)
+            i+=1
+
+        new_angle = self.driveBase.angle();
+        print("rotate end:",new_angle)
+
 
     def curve(self,radius,speed,degrees):
         print("curve start:",self.driveBase.angle())

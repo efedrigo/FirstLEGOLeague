@@ -36,9 +36,9 @@ MissionTable = [[Color.NONE,0,program0], # config test
                 [Color.BLACK,5,mission3_4],
                 [Color.MAGENTA,6,mission10],
                 [Color.LIGHTBLUE,7,mission8],
-                [Color.DARKBLUE,8,mission8],
-                [Color.WHITE,9,mission12],
-                [Color.ROSE,10,mission956],
+                [Color.DARKBLUE,7,mission8],
+                [Color.WHITE,8,mission12],
+                [Color.ROSE,9,mission956],
                 ]  
 
 for mission in MissionTable:

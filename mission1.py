@@ -63,7 +63,8 @@ def mission1(myRobot):
     # Wait until both accessories reach their mechanical stops (stalled())
     left_stalled = False
     right_stalled = False
-    while not (left_stalled and right_stalled):
+    i=0
+    while not (left_stalled and right_stalled) and i<100 :
         if not left_stalled and myRobot.accessoryLeft.stalled():
             myRobot.accessoryLeft.stop()
             myRobot.accessoryLeft.reset_angle(0)
@@ -72,10 +73,11 @@ def mission1(myRobot):
             myRobot.accessoryRight.stop()
             myRobot.accessoryRight.reset_angle(0)
             right_stalled = True
+        i+=1
         wait(10)
 
     # Ensure the drive finished as well (poll distance)
-    while abs(drive.distance()) < DISTANCE1:
+    while abs(drive.distance()- DISTANCE1)>10:
         wait(10)
 
     # stop accessories (safety) and ensure angle zeroed
@@ -91,11 +93,11 @@ def mission1(myRobot):
     drive.settings(straight_speed=MEDIUM_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
     drive.straight(220)
 
-    # --- 4) Lower left accessory to 100° (blocking, no robot motion) ---
-    # run_target(speed_deg_per_s, angle_deg)
+    # on target
     myRobot.accessoryLeft.run_target(600, accessory_left_sign * 800, wait=True)
-
-    # --- 5) Raise left accessory to 0° (blocking) ---
+    myRobot.accessoryLeft.run_target(600, accessory_left_sign * 0, wait=True)
+    myRobot.accessoryLeft.run_target(600, accessory_left_sign * 800, wait=True)
+    drive.turn(10)
     myRobot.accessoryLeft.run_target(600, accessory_left_sign * 0, wait=True)
 
     # --- 6) Slow move straight back 200 mm (blocking) ---
@@ -105,20 +107,23 @@ def mission1(myRobot):
     drive.turn(45)
 
     # --- 8) Lower right accessory to 100° (blocking) ---
-    myRobot.accessoryRight.run_target(400, accessory_right_sign * 180, wait=True)
+    myRobot.accessoryRight.run_target(400, accessory_right_sign * 170, wait=True)
 
     # --- 9) Move straight 200 mm at medium speed (blocking) ---
     drive.settings(straight_speed=MEDIUM_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
-    drive.straight(200)
+    drive.straight(150)
     # --- 10) Raise right accessory to 0° (blocking) ---
-    myRobot.accessoryRight.run_target(150, accessory_right_sign * 0, wait=True)
+    myRobot.accessoryRight.run_target(300, accessory_right_sign * 0, wait=True)
+
+    myRobot.accessoryLeft.run_target(600, accessory_left_sign * 1000, wait=True)
 
     drive.settings(straight_speed=SLOW_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
-    drive.straight(100)
+    drive.straight(200)
 
+    myRobot.accessoryLeft.run_target(600, accessory_left_sign * 0, wait=True)
 
     # --- 11) Move straight back 200 mm at medium speed (blocking) ---
-    drive.straight(-200)
+    drive.straight(-300)
 
     # --- 12) Turn towards initial heading (assume DriveBase.angle() available) ---
     # If DriveBase provides `angle()` (current heading), use it. Otherwise this step

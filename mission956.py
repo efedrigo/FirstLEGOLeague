@@ -21,21 +21,62 @@ def mission956(myRobot):
     drive = myRobot.driveBase
 
     drive.reset()  # zero distance measurement
-    drive.use_gyro(True)
+    drive.use_gyro(False)
     drive.settings(straight_speed=MEDIUM_FAST_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
 
+    actual_angle=myRobot.hub.imu.heading();   
+    print("actual angle 1:", actual_angle)
+
     # Non-blocking straight move
-    drive.straight(750, then=Stop.BRAKE, wait=True)
-    drive.turn(90)
-    drive.straight(960, then=Stop.BRAKE, wait=True)
-    drive.turn(45)
-    drive.settings(straight_speed=200, straight_acceleration=2 * FAST_SPEED)
+    drive.straight(760, then=Stop.BRAKE, wait=True)
+
+    actual_angle=myRobot.hub.imu.heading();   
+    print("actual angle 2:", actual_angle)
+
+    myRobot.rotateAbs(90)
+
+    actual_angle=myRobot.hub.imu.heading();   
+    print("actual angle 3:", actual_angle)
+    return
+    drive.settings(straight_speed=MEDIUM_FAST_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
+#    drive.straight(935, then=Stop.BRAKE, wait=True)
+    drive.straight(150, then=Stop.BRAKE, wait=True)
+
+    actual_angle=myRobot.hub.imu.heading();   
+    print("actual angle 4:", actual_angle)
+
+
+    myRobot.rotateAbs(135)
+
+    actual_angle=myRobot.hub.imu.heading();   
+    print("actual angle 5:", actual_angle)
+
+    return
+    # ora siamoo davanti il target
+
+    actual_angle=myRobot.hub.imu.heading();   
+    print("actual angle 3:", actual_angle)
+
+    if actual_angle<130:
+        drive.straight(-50, then=Stop.BRAKE, wait=True)        
+        myRobot.rotate(130-actual_angle)
+        drive.straight(50, then=Stop.BRAKE, wait=True)
+    
+
+    actual_angle=myRobot.hub.imu.heading();   
+    print("actual angle 4:", actual_angle)
+
+    return
+
+    drive.settings(straight_speed=250, straight_acceleration=2 * FAST_SPEED)
     drive.straight(300, then=Stop.BRAKE, wait=True)
     drive.straight(-100, then=Stop.BRAKE, wait=True)
-    drive.turn(-30)
-    drive.straight(600, then=Stop.BRAKE, wait=True)
-    drive.turn(60)
-    drive.straight(-200, then=Stop.BRAKE, wait=True)
+    drive.turn(-43)
+    drive.straight(520, then=Stop.BRAKE, wait=True)
+    drive.turn(45)
+    drive.straight(-100, then=Stop.BRAKE, wait=True)
+    drive.turn(-20)
+    drive.straight(-20, then=Stop.BRAKE, wait=True)
 
 
 
