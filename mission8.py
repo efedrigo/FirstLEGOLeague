@@ -63,13 +63,6 @@ def mission8(myRobot):
     mart_speed = 1.5  * 20/12*360 # il primo numero è il numero di martellate al secondo
     myRobot.accessoryRight.run_angle(mart_speed, mart_num, then=Stop.HOLD, wait=True)
 
-    #myRobot.accessoryLeft.dc(-accessory_left_sign * 79)
-    myRobot.accessoryRight.dc(-accessory_right_sign * 79)
-    wait(3400) # was: 3900
-    myRobot.accessoryRight.run_target(MEDIUM_FAST_SPEED, 0, then=Stop.HOLD, wait=False)
-
-    #myRobot.accessoryRight.turn(100.0000000001)
-    #myRobot.accessoryLeft.stop()
     myRobot.accessoryRight.stop()
     
 
