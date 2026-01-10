@@ -51,7 +51,7 @@ MissionTable = [[Color.NONE,"0",program0], # config test, battery level
                 [Color.MAGENTA,"6",mission10],
                 [Color.LIGHTBLUE,"7",mission8],
                 [Color.DARKBLUE,"7",mission8],
-                [Color.WHITE,"8",mission956], #was mission12
+                [Color.WHITE,"A",mission956],
                 [Color.ROSE,"A",mission956],
                 ]    
 
