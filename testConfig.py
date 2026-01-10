@@ -8,6 +8,21 @@ import umath
 
 from robot import robotCompetition
 
+
+
+def show_battery_level(hub,current_voltage):
+    
+    hub.display.off()    
+    led_on_crit_full = [6000, 6400, 6800, 7200, 8300]
+
+    for led_y in range (5):  
+        for led_x in range (5):
+            if current_voltage >= led_on_crit_full[led_y]:
+                hub.display.pixel(led_x,led_y,100)                             
+       
+    wait(3000)
+show_battery_level()
+
 def program0(myRobot):
     wait(1000)
     if (myRobot.testConfig()):
@@ -16,6 +31,8 @@ def program0(myRobot):
         myRobot.hub.display.icon(Icon.SAD)
     wait(1000)
 
+    current_voltage = myRobot.hub.battery.voltage()
+    show_battery_level(myRobot.hub,current_voltage)
 
 def program1(myRobot):
 
