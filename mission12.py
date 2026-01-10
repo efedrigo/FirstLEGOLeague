@@ -1,3 +1,4 @@
+# --- START ---
 from pybricks.robotics import DriveBase
 from pybricks.parameters import Stop
 from pybricks.tools import wait
@@ -9,8 +10,9 @@ FAST_SPEED = 500
 MEDIUM_FAST_SPEED=320
 MEDIUM_SPEED = 300
 SLOW_SPEED = 100
-DISTANCE1 = 450
-DISTANCE2 = 580.5
+DISTANCE1 = 420
+DISTANCE2 = 100
+
 def mission12(myRobot):
 
     # accessory direction signs (start with negative as requested)
@@ -22,19 +24,27 @@ def mission12(myRobot):
 
     drive.reset()  # zero distance measurement
     drive.use_gyro(True)
-    drive.settings(straight_speed=MEDIUM_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
-
+    drive.settings(straight_speed=FAST_SPEED, straight_acceleration=2 * FAST_SPEED)
+    drive.settings(turn_rate=150, turn_acceleration=200)
     drive.straight(DISTANCE1, then=Stop.BRAKE, wait=True)
-    wait(0)
+ #   wait(0)
     drive.turn(5, then=Stop.BRAKE, wait=True) 
   
-    wait(0.000000001)
+ #   wait(0.000000001)
     
-    drive.straight(10, then=Stop.BRAKE, wait=True)
-    wait(10)
-    drive.turn(3) 
-    drive.straight(20)
-    drive.turn(3)
+    drive.settings(straight_speed=SLOW_SPEED, straight_acceleration=2 * SLOW_SPEED)
+    i=0
+    while i<4:
+        print("i:", i)
+        drive.straight(40, then=Stop.BRAKE, wait=True)
+        drive.turn(5)
+        i+=1 
+
+    drive.straight(-DISTANCE2)
+    drive.settings(straight_speed=FAST_SPEED, straight_acceleration=2 * FAST_SPEED)
+    drive.straight(-DISTANCE1)
+    return
+                    
     drive.straight(3)
     drive.turn(3)
     drive.straight(70)
@@ -46,4 +56,3 @@ def mission12(myRobot):
 
     #color sensor = very big problem
     return
-
