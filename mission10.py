@@ -15,7 +15,7 @@ def mission10(myRobot):
 
     # accessory direction signs (start with negative as requested)
     accessory_left_sign = -1
-    accessory_right_sign = -1
+    accessory_right_sign = 1
 
     # Initialize DriveBase (pass gyro if available)
     drive = myRobot.driveBase; 
@@ -36,12 +36,12 @@ def mission10(myRobot):
         wait(10)
 
     drive.settings(straight_speed=MEDIUM_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
-    drive.straight(180,then=Stop.HOLD, wait=False)
+    drive.straight(150,then=Stop.HOLD, wait=False)
     while not drive.done():
         wait(10)
 
     # Non-blocking straight move
-    drive.arc(120, 90, then=Stop.HOLD, wait=False) #radius, angle
+    drive.arc(120, 70, then=Stop.HOLD, wait=False) #radius, angle
     while not drive.done():
         wait(10)
 
@@ -51,7 +51,8 @@ def mission10(myRobot):
     # Wait until both accessories reach their mechanical stops (stalled())
     left_stalled = False
     right_stalled = False
-    while not (left_stalled and right_stalled):
+    i=0
+    while not (left_stalled and right_stalled) and i<8:
         if not left_stalled and myRobot.accessoryLeft.stalled():
             myRobot.accessoryLeft.stop()
             myRobot.accessoryLeft.reset_angle(0)
@@ -61,20 +62,23 @@ def mission10(myRobot):
             myRobot.accessoryRight.reset_angle(0)
             right_stalled = True
         wait(10)
+        i+=1
 
     while not drive.done():
         wait(10)
 
     drive.turn(-10)
-    myRobot.accessoryLeft.run_angle(650, accessory_left_sign * 800, wait=True)
+    myRobot.accessoryLeft.run_angle(650, accessory_left_sign * 290, wait=True)
  
     drive.turn(-25)
 #    drive.arc(40, -10, then=Stop.HOLD, wait=True) #radius, angle
 
     print("moving down")
-    myRobot.accessoryRight.run_angle(1500,  -400, wait=True)
+    myRobot.accessoryRight.run_angle(1500,  accessory_right_sign*200, wait=True)
+    print(myRobot.accessoryRight.angle())
     print("moving up")
-    myRobot.accessoryRight.run_angle(1500, 300, wait=True)
+    myRobot.accessoryRight.run_angle(1500, -accessory_right_sign*10, wait=True)
+    print(myRobot.accessoryRight.angle())
     return
 
     # --- 6) Slow move straight back 200 mm (blocking) ---

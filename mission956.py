@@ -29,7 +29,7 @@ def mission956(myRobot):
     myRobot.rotateAbs(90)
 
     drive.settings(straight_speed=FAST_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
-    drive.straight(935, then=Stop.HOLD, wait=True)
+    drive.straight(934, then=Stop.HOLD, wait=True)
 
     myRobot.rotateAbs(140,0)
 
@@ -38,10 +38,10 @@ def mission956(myRobot):
     actual_angle=myRobot.hub.imu.heading();   
     print("actual angle 3:", actual_angle)
 
-    if actual_angle<130:
+    if actual_angle<120:
         drive.settings(straight_speed=SLOW_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
         drive.straight(-30, then=Stop.HOLD, wait=True)        
-        myRobot.rotateAbs(130)
+        myRobot.rotateAbs(100)
         drive.straight(30, then=Stop.HOLD, wait=True)
     
 
@@ -51,11 +51,10 @@ def mission956(myRobot):
 
     drive.settings(straight_speed=250, straight_acceleration=2 * FAST_SPEED)
     drive.straight(400, then=Stop.BRAKE, wait=True)
-    drive.straight(-100, then=Stop.BRAKE, wait=True)
-    return
+    drive.straight(-95, then=Stop.BRAKE, wait=True)
+    drive.turn(-40)
 
-    drive.turn(-43)
-    drive.straight(520, then=Stop.BRAKE, wait=True)
+    drive.straight(450, then=Stop.BRAKE, wait=True)
     drive.turn(45)
     drive.straight(-100, then=Stop.BRAKE, wait=True)
     drive.turn(-20)

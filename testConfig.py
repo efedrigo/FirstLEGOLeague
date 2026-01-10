@@ -10,8 +10,10 @@ from robot import robotCompetition
 
 
 
-def show_battery_level(hub,current_voltage):
+def show_battery_level(hub):
     
+    current_voltage = hub.battery.voltage()
+    print("battery level:",current_voltage) 
     hub.display.off()    
     led_on_crit_full = [6000, 6400, 6800, 7200, 8300]
 
@@ -21,7 +23,6 @@ def show_battery_level(hub,current_voltage):
                 hub.display.pixel(led_x,led_y,100)                             
        
     wait(3000)
-show_battery_level()
 
 def program0(myRobot):
     wait(1000)
@@ -31,8 +32,7 @@ def program0(myRobot):
         myRobot.hub.display.icon(Icon.SAD)
     wait(1000)
 
-    current_voltage = myRobot.hub.battery.voltage()
-    show_battery_level(myRobot.hub,current_voltage)
+    show_battery_level(myRobot.hub)
 
 def program1(myRobot):
 
