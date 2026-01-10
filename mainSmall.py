@@ -35,6 +35,9 @@ myRobot = robotCompetitionCompact()
 #         mybrightness = mybrightness - 10
 # END DEBUG
 
+hsv = myRobot.colorSensor.hsv(surface=True)
+print("sensed HSV values:",hsv)
+
 color = myRobot.colorSensor.color()
 print("sensed color:",color)
 
