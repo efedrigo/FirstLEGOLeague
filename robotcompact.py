@@ -11,16 +11,16 @@ Color.LIGHTGREEN = Color(h=72, s=46, v=13)
 Color.DARKGREEN = Color(h=135, s=51, v=9)
 Color.MAGENTA = Color(h=260, s=51, v=5)
 Color.FUCSIA = Color(h=338, s=81, v=9)
-Color.ROSE = Color(h=330, s=64, v=24)
+Color.ROSE = Color(h=324, s=46, v=32) # redefined
 Color.RED = Color(h=348, s=88, v=15)
-Color.DARKBLUE = Color(h=223, s=75, v=9)
+Color.DARKBLUE = Color(h=213, s=87, v=13) # redefined
 Color.LIGHTBLUE = Color(h=208, s=71, v=17)
-Color.YELLOW = Color(h=42, s=78, v=26)
+Color.YELLOW = Color(h=49, s=65, v=29) # redefined
 Color.LIGHTBROWN = Color(h=0, s=65, v=11)
 Color.DARKBROWN = Color(h=345, s=64, v=5)
 Color.BEIGE = Color(h=21, s=49, v=19)
-Color.BLACK = Color(h=300, s=29, v=3)
-Color.WHITE = Color(h=348, s=20, v=31)
+Color.BLACK = Color(h=240, s=22, v=5) # redefined
+Color.WHITE = Color(h=180, s=3, v=32) # redefined
 Color.LIGHTGRAY = Color(h=270, s=20, v=13)
 Color.NONE = Color(h=330, s=88, v=1)
 
@@ -63,7 +63,7 @@ class robot():
 #
 #
 ##################################################
-class robotCompetition():
+class robotCompetitionCompact():
     hub = 0;
     motorLeft = 0;
     motorRight = 0;
@@ -139,8 +139,9 @@ class robotCompetition():
         return self.configurationCorrect
 
     def __init__(self):
-        self.hub = InventorHub(front_side=-Axis.X,top_side=Axis.Z);
-        self.hub.display.orientation(up=Side.RIGHT)
+        #self.hub = InventorHub(front_side=-Axis.X,top_side=Axis.Z); # large robot
+        self.hub = InventorHub(top_side=-Axis.Y, front_side=Axis.Z); # small robot
+        self.hub.display.orientation(up=Side.TOP)
         self.hub.display.icon(Icon.CIRCLE)
         if (self.testConfig()):
             self.motorLeft = Motor(Port.A,positive_direction=Direction.CLOCKWISE);
@@ -153,7 +154,8 @@ class robotCompetition():
 
         # blue : 87.5 m
         # black-motorcycle:81.6
-            self.wheelDiameter = 79.78; # diameter, mm
+            # self.wheelDiameter = 79.78; # diameter, mm
+            self.wheelDiameter = 43.2; # diameter, mm
             self.wheelC = self.wheelDiameter * umath.pi; #mm 
             self.axle = 89; #88; #mm
             self.driveBase = DriveBase(self.motorLeft, 
@@ -163,6 +165,7 @@ class robotCompetition():
             self.driveBase.use_gyro(True)
             self.driveBase.reset(0,0)
             print("drivebase:",self.driveBase.settings())
+            print("init complete")
         print("init done")
 
     def runStraight(self,speed,distance):
@@ -175,18 +178,9 @@ class robotCompetition():
     
     def rotate(self,degrees):
         self.driveBase.settings(500,1000,300,1200); # speed, accel, angular speed, angular accel
-        actual_angle=self.driveBase.angle();   
-        print("rotate start:",actual_angle)
+        print("rotate start:",self.driveBase.angle())
         self.driveBase.turn(degrees,then=Stop.HOLD, wait=True)
-
-        new_angle = self.driveBase.angle();
-        print("rotate end:",new_angle)
-        if (abs(new_angle-actual_angle) < abs(degrees)-1):
-            print("rotate incomplete, retrying")
-            self.driveBase.turn(degrees-(new_angle-actual_angle),then=Stop.HOLD, wait=True)
-
-        new_angle = self.driveBase.angle();
-        print("rotate end:",new_angle)
+        print("rotate start:",self.driveBase.angle())
 
     def rotateAbs(self,degrees,try_number=5):
         self.driveBase.settings(500,1000,300,1200); # speed, accel, angular speed, angular accel
@@ -209,8 +203,6 @@ class robotCompetition():
         new_angle = self.hub.imu.heading();
         print("rotate end:",new_angle)
         self.driveBase.reset(0,new_angle)
-
-
 
     def curve(self,radius,speed,degrees):
         print("curve start:",self.driveBase.angle())

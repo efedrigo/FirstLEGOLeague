@@ -7,7 +7,7 @@ from pybricks.parameters import Axis
 import umath
 
 
-from robot import robotCompetitionCompact
+from robotcompact import robotCompetitionCompact
 #from odometer import odometer
 
 from testConfig import program1, program0
