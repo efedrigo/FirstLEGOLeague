@@ -29,6 +29,8 @@ def mission3_4(myRobot):
     drive.use_gyro(True)
     drive.reset(0,0)
 
+    accessoryLeft_sign =1;
+    accessoryRight_sign =1;
 
 #    # Start from a known state for accessories.
 #    left_acc.reset_angle(0)
@@ -52,9 +54,9 @@ def mission3_4(myRobot):
 
 #    # Run accessories until stall (mechanical stop).
     print("start motor right")
-    accessoryRight.dc(40)
+    accessoryRight.dc(accessoryLeft_sign*40)
     print("start motor left")
-    accessoryLeft.dc(-50)
+    accessoryLeft.dc(accessoryLeft_sign*50)
 
     left_stalled = False
     right_stalled = False
@@ -103,7 +105,7 @@ def mission3_4(myRobot):
 
     wait(300)
     # Lower accessories in parallel to the arc.
-    accessoryLeft.run_target(500, 480, then=Stop.HOLD, wait=False)
+    accessoryLeft.run_target(500, accessoryLeft_sign*(-80), then=Stop.HOLD, wait=False)
     accessoryRight.run_target(500, -200, then=Stop.HOLD, wait=False)
 
     # Wait until both the arc and the accessory motions are done.
@@ -122,7 +124,7 @@ def mission3_4(myRobot):
     
     # get object
     # raise sliglhtly
-    accessoryLeft.run_target(500, 470, then=Stop.HOLD, wait=False)
+    accessoryLeft.run_target(500, accessoryLeft_sign*(-70), then=Stop.HOLD, wait=False)
     # raise Indiana Jones
     accessoryRight.run_target(1000, 10, then=Stop.HOLD, wait=True)
     wait(1000)
@@ -130,6 +132,7 @@ def mission3_4(myRobot):
 
     # exit backwards
     drive.straight(-200, then=Stop.HOLD, wait=True)
+    accessoryLeft.run_target(500, accessoryLeft_sign*(-20), then=Stop.HOLD, wait=False)
     drive.turn(100)
 
     drive.settings(500, 500, 180, 180)  # straight_speed, straight_accel, turn_rate, turn_accel

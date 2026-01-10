@@ -22,20 +22,43 @@ def mission956(myRobot):
 
     drive.reset()  # zero distance measurement
     drive.use_gyro(True)
-    drive.settings(straight_speed=MEDIUM_FAST_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
+    drive.settings(straight_speed=FAST_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
 
-    # Non-blocking straight move
-    drive.straight(750, then=Stop.BRAKE, wait=True)
-    drive.turn(90)
-    drive.straight(960, then=Stop.BRAKE, wait=True)
+    drive.straight(740, then=Stop.BRAKE, wait=True)
+
+    myRobot.rotateAbs(90)
+
+    drive.settings(straight_speed=FAST_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
+    drive.straight(934, then=Stop.HOLD, wait=True)
+
+    myRobot.rotateAbs(140,0)
+
+    # ora siamoo davanti il target
+
+    actual_angle=myRobot.hub.imu.heading();   
+    print("actual angle 3:", actual_angle)
+
+    if actual_angle<120:
+        drive.settings(straight_speed=SLOW_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
+        drive.straight(-30, then=Stop.HOLD, wait=True)        
+        myRobot.rotateAbs(100)
+        drive.straight(30, then=Stop.HOLD, wait=True)
+    
+
+    actual_angle=myRobot.hub.imu.heading();   
+    print("actual angle 4:", actual_angle)
+
+
+    drive.settings(straight_speed=250, straight_acceleration=2 * FAST_SPEED)
+    drive.straight(400, then=Stop.BRAKE, wait=True)
+    drive.straight(-95, then=Stop.BRAKE, wait=True)
+    drive.turn(-40)
+
+    drive.straight(450, then=Stop.BRAKE, wait=True)
     drive.turn(45)
-    drive.settings(straight_speed=200, straight_acceleration=2 * FAST_SPEED)
-    drive.straight(300, then=Stop.BRAKE, wait=True)
     drive.straight(-100, then=Stop.BRAKE, wait=True)
-    drive.turn(-30)
-    drive.straight(600, then=Stop.BRAKE, wait=True)
-    drive.turn(60)
-    drive.straight(-200, then=Stop.BRAKE, wait=True)
+    drive.turn(-20)
+    drive.straight(-20, then=Stop.BRAKE, wait=True)
 
 
 

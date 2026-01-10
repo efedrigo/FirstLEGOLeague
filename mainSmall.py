@@ -39,18 +39,18 @@ color = myRobot.colorSensor.color()
 print("sensed color:",color)
 
 
-MissionTable = [[Color.NONE,0,program0], # config test
-                [Color.LIGHTBROWN,1,program1], # test configuration with motion
-                [Color.DARKBROWN,2,program2],  # test odometer
-                [Color.BEIGE,3,testPursuit], # test trajectory tracking
-                [Color.YELLOW,4,mission1],
-                [Color.BLACK,5,mission3_4],
-                [Color.MAGENTA,6,mission10],
-                [Color.LIGHTBLUE,7,mission8],
-                [Color.DARKBLUE,8,mission8],
-                [Color.WHITE,9,mission956], #was mission12
-                [Color.ROSE,10,mission956],
-                ]   
+MissionTable = [[Color.NONE,"0",program0], # config test, battery level
+                [Color.LIGHTBROWN,"1",program1], # test configuration with motion
+                [Color.DARKBROWN,"2",program2],  # test odometer
+                [Color.BEIGE,"3",testPursuit], # test trajectory tracking
+                [Color.YELLOW,"4",mission1],
+                [Color.BLACK,"5",mission3_4],
+                [Color.MAGENTA,"6",mission10],
+                [Color.LIGHTBLUE,"7",mission8],
+                [Color.DARKBLUE,"7",mission8],
+                [Color.WHITE,"8",mission12],
+                [Color.ROSE,"A",mission956],
+                ]    
 
 for mission in MissionTable:
     if (color == mission[0]):
