@@ -27,7 +27,7 @@ FAST_SPEED = 500
 MEDIUM_FAST_SPEED = 400
 MEDIUM_SPEED = 300
 SLOW_SPEED = 100
-DISTANCE1 = 390 # was 410 on small robot
+DISTANCE1 = 380
 
 def mission8(myRobot):
     """Run mission 8 using `myRobot` components.
@@ -48,24 +48,24 @@ def mission8(myRobot):
     drive.use_gyro(True)
     drive.settings(straight_speed=MEDIUM_FAST_SPEED, straight_acceleration=FAST_SPEED)
 
-    # Start accessories using dc (non-blocking); use duty cycle 50%
+    # setta la posizione di partenza di ogni attachment
     myRobot.accessoryLeft.reset_angle(0)
     myRobot.accessoryRight.reset_angle(0)
 
-    
     drive.straight(DISTANCE1, then=Stop.BRAKE, wait=True)
 
+    """
+    Per muoveere il martello, un ingranaggio piccolo (sul motore) è collegato ad uno grande (sull'attachment).
+    L'ingranaggio piccolo ha 12 denti, il grande 20: per dare una martellata, il motore deve fare 20/12=5/3 giri.
+    Non posso usare run_target() per portare il martello ad una posizione fissa, perchè ad una certa posizione del 
+    motore non corrisponde sempre la stessa posizione fissa del martello (cambia dopo ogni giro).
+    """
+    mart_num =   4    * 20/12*360 # il primo numero è il numero di martellate 
+    mart_speed = 1.5  * 20/12*360 # il primo numero è il numero di martellate al secondo
+    myRobot.accessoryRight.run_angle(mart_speed, mart_num, then=Stop.HOLD, wait=True)
 
-    #myRobot.accessoryLeft.dc(-accessory_left_sign * 79)
-    myRobot.accessoryRight.dc(-accessory_right_sign * 79)
-    wait(3200) # was: 3900
-    myRobot.accessoryRight.run_target(MEDIUM_FAST_SPEED, 0, then=Stop.HOLD, wait=True)
-
-    #myRobot.accessoryRight.turn(100.0000000001)
-    #myRobot.accessoryLeft.stop()
     myRobot.accessoryRight.stop()
     
-    # Non-blocking straight move
 
 # --- 2) Gira a destra e spingi la leva
     drive.reset()  # zero distance measurement
