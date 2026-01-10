@@ -26,6 +26,7 @@ import umath as umath
 FAST_SPEED = 500
 MEDIUM_FAST_SPEED = 400
 MEDIUM_SPEED = 300
+MEDIUM_SLOW_SPEED = 200
 SLOW_SPEED = 100
 DISTANCE1 = 380
 
@@ -45,7 +46,7 @@ def mission8(myRobot):
     # --- 1) vai avanti e dai delle martellate ---
     drive.reset()  # zero distance measurement
     drive.use_gyro(True)
-    drive.settings(straight_speed=MEDIUM_FAST_SPEED, straight_acceleration=FAST_SPEED)
+    drive.settings(straight_speed=FAST_SPEED, straight_acceleration=FAST_SPEED)
 
     # setta la posizione di partenza di ogni attachment
     myRobot.accessoryLeft.reset_angle(0)
@@ -59,48 +60,65 @@ def mission8(myRobot):
     Non posso usare run_target() per portare il martello ad una posizione fissa, perchè ad una certa posizione del 
     motore non corrisponde sempre la stessa posizione fissa del martello (cambia dopo ogni giro).
     """
-    mart_num =   4    * 20/12*360 # il primo numero è il numero di martellate 
-    mart_speed = 1.5  * 20/12*360 # il primo numero è il numero di martellate al secondo
+    
+    mart_num =   5    * 20/12*360 # il primo numero è il numero di martellate 
+    mart_speed = 2.5  * 20/12*360 # il primo numero è il numero di martellate al secondo
     myRobot.accessoryRight.run_angle(mart_speed, mart_num, then=Stop.HOLD, wait=True)
 
     myRobot.accessoryRight.stop()
     
 
 # --- 2) Gira a destra e spingi la leva
-    drive.reset()  # zero distance measurement
-    drive.use_gyro(True)
-    drive.settings(straight_speed=MEDIUM_FAST_SPEED, straight_acceleration=FAST_SPEED)
+    drive.settings(straight_speed=2*FAST_SPEED, straight_acceleration=FAST_SPEED)
 
     drive.turn(-90)
-    drive.straight(148, then=Stop.BRAKE, wait=True)
+    drive.straight(183, then=Stop.BRAKE, wait=True)
     drive.turn(-50)
-    drive.straight(100, then=Stop.BRAKE, wait=True)
-
 # --- 3) Torna alla base
-    drive.reset()  # zero distance measurement
-    drive.use_gyro(True)
-    drive.settings(straight_speed=MEDIUM_FAST_SPEED, straight_acceleration=FAST_SPEED)
-
-    drive.turn(-68) # da testare
-    drive.straight(300, then=Stop.BRAKE, wait=True)
+    drive.arc(-170, 135,then=Stop.BRAKE, wait=True)
 
 #   wait(n. seconds*1 second (=1000 milliseconds))
-    wait(4*1000)
+#    myRobot.hub.display.char("4")
+#    wait(1*1000)
+#    myRobot.hub.display.char("3")
+#    wait(1*1000)
+    myRobot.hub.display.char("2")
+    wait(1*1000)
+    myRobot.hub.display.char("1")
+    wait(1*1000)
+    myRobot.hub.display.char("0")
 
+     
+    
 # --- 4) Vai ad alzare il tesoro
     drive.reset()
     drive.use_gyro(True)
-    drive.settings(straight_speed=MEDIUM_FAST_SPEED, straight_acceleration=FAST_SPEED)
+    drive.settings(straight_speed=FAST_SPEED, straight_acceleration=FAST_SPEED)
 
-    drive.turn(-20)
-    drive.straight(100, then=Stop.BRAKE, wait=True)
+# --- 4.1) Vai avanti    
+    drive.straight(810, then=Stop.BRAKE, wait=True)
+    drive.turn(-80)
     
-    
-# --- 5) Torna alla base e finisci alla missione Forza Italia :)
+    accessory_left_sign=-1
 
-    drive.straight(-100, then=Stop.BRAKE, wait=True)
-    print("M Trump, W Mattarella :)")
+    drive.settings(straight_speed=MEDIUM_SLOW_SPEED, straight_acceleration=FAST_SPEED)
+    drive.straight(200, then=Stop.BRAKE, wait=True)
+    drive.turn(-10)
+   
+    print("8")
+    wait(1)
 
+# --- 4.2) Gira i gear a sinistra
+
+    drive.turn(-5)
+    myRobot.accessoryLeft.run(-610)
+    wait(4*1000)
+    myRobot.accessoryLeft.stop()
+
+# --- 5) Girati e ritorna in base
+    drive.settings(straight_speed=FAST_SPEED, straight_acceleration=FAST_SPEED)
+    drive.arc(-120,-85)
+    drive.straight(1000)
 
     return
 
@@ -189,3 +207,7 @@ def mission8(myRobot):
 
 
     return
+
+
+
+

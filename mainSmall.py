@@ -6,6 +6,7 @@ from pybricks.tools import wait, StopWatch, multitask, run_task
 from pybricks.parameters import Axis
 import umath
 
+
 from robot import robotCompetitionCompact
 #from odometer import odometer
 
@@ -35,6 +36,9 @@ myRobot = robotCompetitionCompact()
 #         mybrightness = mybrightness - 10
 # END DEBUG
 
+hsv = myRobot.colorSensor.hsv(surface=True)
+print("sensed HSV values:",hsv)
+
 color = myRobot.colorSensor.color()
 print("sensed color:",color)
 
@@ -51,6 +55,7 @@ MissionTable = [[Color.NONE,"0",program0], # config test, battery level
                 [Color.WHITE,"8",mission956], #was mission12
                 [Color.ROSE,"A",mission956],
                 ]    
+
 
 for mission in MissionTable:
     if (color == mission[0]):
