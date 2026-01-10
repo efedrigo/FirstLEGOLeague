@@ -35,7 +35,6 @@ def mission8(myRobot):
     Follows the exact sequence requested. Accessory sign variables allow
     swapping directions without changing calls.
     """
-
     # accessory direction signs (start with negative as requested)
     accessory_left_sign = -1
     accessory_right_sign = -1
@@ -58,7 +57,7 @@ def mission8(myRobot):
 
     #myRobot.accessoryLeft.dc(-accessory_left_sign * 79)
     myRobot.accessoryRight.dc(-accessory_right_sign * 79)
-    wait(3200) # was: 3900
+    wait(3400) # was: 3900
     myRobot.accessoryRight.run_target(MEDIUM_FAST_SPEED, 0, then=Stop.HOLD, wait=False)
 
     #myRobot.accessoryRight.turn(100.0000000001)
@@ -85,15 +84,25 @@ def mission8(myRobot):
     drive.turn(-68) # da testare
     drive.straight(300, then=Stop.BRAKE, wait=True)
 
+#   wait(n. seconds*1 second (=1000 milliseconds))
+    wait(4*1000)
+
+# --- 4) Vai ad alzare il tesoro
+    drive.reset()
+    drive.use_gyro(True)
+    drive.settings(straight_speed=MEDIUM_FAST_SPEED, straight_acceleration=FAST_SPEED)
+
+    drive.turn(-20)
+    drive.straight(100, then=Stop.BRAKE, wait=True)
+    
+    
+# --- 5) Torna alla base e finisci alla missione Forza Italia :)
+
+    drive.straight(-100, then=Stop.BRAKE, wait=True)
+    print("M Trump, W Mattarella :)")
+
+
     return
-    #####END
-
-
-
-
-
-
-
 
 
 
@@ -177,5 +186,6 @@ def mission8(myRobot):
     # Ensure accessories are stopped at the end
     myRobot.accessoryLeft.stop()
     myRobot.accessoryRight.stop()
+
 
     return
