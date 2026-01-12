@@ -34,7 +34,7 @@ MissionTable = [[Color.NONE,"0",program0], # config test, battery level
                 [Color.BEIGE,"3",testPursuit], # test trajectory tracking
                 [Color.YELLOW,"4",mission1],
                 [Color.BLACK,"5",mission3_4],
-                [Color.MAGENTA,"6",mission8], # was mission10
+                [Color.MAGENTA,"6",mission10],
                 [Color.LIGHTBLUE,"7",mission8],
                 [Color.DARKBLUE,"7",mission8],
                 [Color.WHITE,"8",mission12],
