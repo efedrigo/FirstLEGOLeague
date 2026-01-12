@@ -69,7 +69,7 @@ def mission8(myRobot):
     
 
 # --- 2) Gira a destra e spingi la leva
-    drive.settings(straight_speed=2*FAST_SPEED, straight_acceleration=FAST_SPEED)
+#    drive.settings(straight_speed=2*FAST_SPEED, straight_acceleration=FAST_SPEED)
 
     drive.turn(-90)
     drive.straight(183, then=Stop.BRAKE, wait=True)
