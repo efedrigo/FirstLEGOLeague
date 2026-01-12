@@ -193,22 +193,28 @@ class robotCompetition():
         actual_angle=self.hub.imu.heading();   
         target=degrees-actual_angle
 
-        print("rotate start:",actual_angle)
+#        print("rotate start:",actual_angle)
+        if (try_number<=0):
+            self.driveBase.use_gyro(False)
+        else:
+            self.driveBase.use_gyro(True) 
+
         self.driveBase.turn(target,then=Stop.HOLD, wait=True)
 
         new_angle = self.hub.imu.heading();
-        print("rotate end:",new_angle)
+#        print("rotate end:",new_angle)
         i=0
         while (abs(new_angle-degrees)>1 and i<try_number):
-            print("rotate incomplete, retrying:",degrees-new_angle)
+#            print("rotate incomplete, retrying:",degrees-new_angle)
             self.driveBase.turn(degrees-new_angle,then=Stop.HOLD, wait=True)
             new_angle = self.hub.imu.heading();
-            print("rotate end:",new_angle)
+#            print("rotate end:",new_angle)
             i+=1
 
         new_angle = self.hub.imu.heading();
-        print("rotate end:",new_angle)
+#        print("rotate end:",new_angle)
         self.driveBase.reset(0,new_angle)
+        self.driveBase.use_gyro(True) 
 
 
 
