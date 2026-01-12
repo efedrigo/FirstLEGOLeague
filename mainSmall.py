@@ -42,7 +42,6 @@ print("sensed HSV values:",hsv)
 color = myRobot.colorSensor.color()
 print("sensed color:",color)
 
-
 MissionTable = [[Color.NONE,"0",program0], # config test, battery level
                 [Color.LIGHTBROWN,"1",program1], # test configuration with motion
                 [Color.DARKBROWN,"2",program2],  # test odometer

@@ -6,6 +6,8 @@ from pybricks.robotics import DriveBase
 from pybricks.tools import wait, StopWatch
 from uerrno import ENODEV
 
+print("Testing robot configuration")
+
 # Make a list of known ports.
 ports = [Port.A, Port.B,Port.C, Port.D, Port.E,Port.F]
 
