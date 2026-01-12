@@ -188,7 +188,16 @@ class robotCompetition():
         new_angle = self.driveBase.angle();
         print("rotate end:",new_angle)
 
-    def rotateAbs(self,degrees,try_number=5):
+    # rotate from the current angle to an absolute angle as given by the gyro
+    # the second parameter indicates how may times to retry in case the rotation could not be completed
+    # on the first try, likely due to un obstacle
+    # if the second parameter is 0, an uncontrolled rotation is performed without gyro assistance
+    # in this case the robot should not insist too much in case of an obstacle
+    # the result will not be the final angle and this condition can be detecte
+    # if the parameter is 1 or more or default, the robot will retry until the angle is reached
+    # which will force a lateral motion of the robot in case of an obstacle
+
+    def rotateAbs(self,degrees,try_number=3):
         self.driveBase.settings(500,1000,300,1200); # speed, accel, angular speed, angular accel
         actual_angle=self.hub.imu.heading();   
         target=degrees-actual_angle
@@ -202,6 +211,12 @@ class robotCompetition():
         self.driveBase.turn(target,then=Stop.HOLD, wait=True)
 
         new_angle = self.hub.imu.heading();
+        if (abs(new_angle-degrees)>10):
+            print("**** Likely impact detected on rotation")
+            if (try_number<=0):
+                self.driveBase.use_gyro(True) 
+                return
+            
 #        print("rotate end:",new_angle)
         i=0
         while (abs(new_angle-degrees)>1 and i<try_number):

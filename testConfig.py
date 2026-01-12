@@ -6,7 +6,7 @@ from pybricks.tools import wait, StopWatch, multitask, run_task
 from pybricks.parameters import Axis
 import umath
 
-from robot import robotCompetition
+#from robot import robotCompetition
 
 
 

@@ -16,7 +16,7 @@ from mission1 import mission1
 from mission3_4 import mission3_4
 from mission9 import mission9
 #from mission7 import mission7
-from mission8 import mission8
+from mission8_b import mission8
 from mission10 import mission10
 from mission12 import mission12
 from mission956 import mission956
