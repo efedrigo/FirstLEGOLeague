@@ -57,16 +57,16 @@ def mission10(myRobot):
         wait(10)
 
     drive.turn(-10)
-    myRobot.accessoryLeft.run_angle(650, accessory_left_sign * 340, wait=True)
+    myRobot.accessoryLeft.run_angle(650, accessory_left_sign * 190, wait=True)
  
 #    drive.turn(-25)
 #    drive.arc(40, -10, then=Stop.HOLD, wait=True) #radius, angle
 
     print("moving down")
-    myRobot.accessoryRight.run_angle(1500,  accessory_right_sign*180, wait=True)
+    myRobot.accessoryRight.run_angle(1500,  accessory_right_sign*100, wait=True)
     print(myRobot.accessoryRight.angle())
     print("moving up")
-    myRobot.accessoryRight.run_angle(500, -accessory_right_sign*200, wait=True)
+    myRobot.accessoryRight.run_angle(500, -accessory_right_sign*100, wait=True)
     print(myRobot.accessoryRight.angle())
 
     # --- 6) Slow move straight back 200 mm (blocking) ---

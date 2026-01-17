@@ -92,7 +92,7 @@ def mission1(myRobot):
 
     drive.straight(120)
     # on target
-    myRobot.accessoryLeft.run_target(1000, accessory_left_sign * 800, wait=True)
+    myRobot.accessoryLeft.run_target(1000, accessory_left_sign * 200, wait=True)
     myRobot.accessoryLeft.run_target(1000, accessory_left_sign * 0, wait=True)
 
     # --- 6) Slow move straight back 200 mm (blocking) ---
