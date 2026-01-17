@@ -32,29 +32,19 @@ def mission3_4(myRobot):
     accessoryLeft_sign =1;
     accessoryRight_sign =1;
 
-#    # Start from a known state for accessories.
-#    left_acc.reset_angle(0)
-#    right_acc.reset_angle(0)
-
     # ----------------------------------------------------------------------
     # 1) Straight 900 mm at 500 mm/s
     #    While driving: move both accessories until mechanical stop, then reset.
     # ----------------------------------------------------------------------
-    drive.stop()
     drive.settings(500, 500, 180, 180)  # straight_speed, straight_accel, turn_rate, turn_accel
 
-    # Non-blocking straight.
-
-#   these are blocking
-#    myRobot.accessoryRight.run_until_stalled(360*3,duty_limit=40)
-#    myRobot.accessoryLeft.run_until_stalled(-360*3,duty_limit=30)
 
     print("start driving")
     drive.straight(840, then=Stop.HOLD, wait=False)
 
 #    # Run accessories until stall (mechanical stop).
     print("start motor right")
-    accessoryRight.dc(accessoryLeft_sign*40)
+    accessoryRight.dc(accessoryLeft_sign*50)
     print("start motor left")
     accessoryLeft.dc(accessoryLeft_sign*50)
 
@@ -101,43 +91,65 @@ def mission3_4(myRobot):
     drive.settings(200, 100, 200, 100)
 
     # Positive angle = right turn in the current DriveBase API.
-    drive.arc(70, 90, then=Stop.HOLD, wait=False)
+    drive.arc(70, 90, then=Stop.HOLD, wait=True)
 
-    wait(300)
-    # Lower accessories in parallel to the arc.
-    accessoryLeft.run_target(500, accessoryLeft_sign*(-80), then=Stop.HOLD, wait=False)
-    accessoryRight.run_target(500, -200, then=Stop.HOLD, wait=False)
+    accessoryLeft.run_target(500, accessoryLeft_sign*(-250), then=Stop.HOLD, wait=False)
 
-    # Wait until both the arc and the accessory motions are done.
-    while (not drive.done() or
-           not (accessoryLeft.done() and accessoryRight.done())):
-        wait(10)
+#    # Wait until both the arc and the accessory motions are done.
+#    while (not drive.done() or
+#           not (accessoryLeft.done())):
+#        wait(10)
+
+    myRobot.rotateAbs(90)
+    accessoryRight.run_target(500, -120, then=Stop.HOLD, wait=True)
 
     # ----------------------------------------------------------------------
     # 3) move slowly towards target
     # ----------------------------------------------------------------------
     drive.settings(80, 100, 90, 90)
-#    drive.use_gyro(False)
-    drive.straight(180, then=Stop.HOLD, wait=True)
-#    accessoryLeft.run_target(500, 470, then=Stop.HOLD, wait=False)
-    drive.settings(100, 100, 200, 100)
-    
+
     # get object
+    drive.straight(130, then=Stop.HOLD, wait=True)
+    accessoryLeft.run_target(500, accessoryLeft_sign*(-260), then=Stop.HOLD, wait=False)
+    drive.straight(60, then=Stop.HOLD, wait=True)
+
     # raise sliglhtly
-    accessoryLeft.run_target(500, accessoryLeft_sign*(-70), then=Stop.HOLD, wait=False)
+    drive.settings(100, 100, 200, 100)
+    accessoryLeft.run_target(500, accessoryLeft_sign*(-250), then=Stop.HOLD, wait=False)
+    #m re-align
+    myRobot.rotateAbs(95)
     # raise Indiana Jones
-    accessoryRight.run_target(1000, 10, then=Stop.HOLD, wait=True)
-    wait(1000)
-    accessoryRight.run_target(300, -150, then=Stop.HOLD, wait=True)
+    accessoryRight.run_target(180, -50, then=Stop.HOLD, wait=True)
+    wait(2000)
+    accessoryRight.run_target(100, -120, then=Stop.HOLD, wait=True)
 
     # exit backwards
+    drive.settings(100, 100, 200, 100)
     drive.straight(-200, then=Stop.HOLD, wait=True)
-    accessoryLeft.run_target(500, accessoryLeft_sign*(-20), then=Stop.HOLD, wait=False)
-    drive.turn(100)
+
+    myRobot.rotateAbs(130)
+
+    drive.settings(300, 300, 200, 100)
+    drive.straight(300, then=Stop.HOLD, wait=True)
+    accessoryRight.run_target(100, -135, then=Stop.HOLD, wait=True)
+    myRobot.rotateAbs(125)
+    drive.settings(100, 100, 200, 100)
+    drive.straight(150, then=Stop.HOLD, wait=True)
+    drive.turn(-10)
+
+    drive.settings(50, 50, 200, 100)
+    accessoryRight.run_target(300, -30, then=Stop.HOLD, wait=False)
+    drive.straight(-30, then=Stop.HOLD, wait=True)
+    wait(1000)
+
+    # back up
+    drive.settings(500, 500, 180, 180)  # straight_speed, straight_accel, turn_rate, turn_accel
+    drive.straight(-150, then=Stop.HOLD, wait=True)
+    myRobot.rotateAbs(45)
 
     drive.settings(500, 500, 180, 180)  # straight_speed, straight_accel, turn_rate, turn_accel
-    drive.straight(840, then=Stop.HOLD, wait=True)
+    drive.straight(-750, then=Stop.HOLD, wait=True)
 
-    drive.stop()
-    # Final stop to fully deactivate the drive base.
+    return
+
 

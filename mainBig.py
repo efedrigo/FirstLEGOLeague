@@ -20,6 +20,7 @@ from mission8_b import mission8
 from mission10 import mission10
 from mission12 import mission12
 from mission956 import mission956
+from mission14 import mission14
 
 watch = StopWatch()
 myRobot = robotCompetition()
@@ -31,7 +32,7 @@ print("sensed color:",color)
 MissionTable = [[Color.NONE,"0",program0], # config test, battery level
                 [Color.LIGHTBROWN,"1",program1], # test configuration with motion
                 [Color.DARKBROWN,"2",program2],  # test odometer
-                [Color.BEIGE,"3",testPursuit], # test trajectory tracking
+#                [Color.BEIGE,"3",testPursuit], # test trajectory tracking
                 [Color.YELLOW,"4",mission1],
                 [Color.BLACK,"5",mission3_4],
                 [Color.MAGENTA,"6",mission10],
@@ -39,6 +40,7 @@ MissionTable = [[Color.NONE,"0",program0], # config test, battery level
                 [Color.DARKBLUE,"7",mission8],
                 [Color.WHITE,"8",mission12],
                 [Color.ROSE,"A",mission956],
+                [Color.ROSE,"B",mission14],
                 ]  
 
 for mission in MissionTable:
@@ -49,5 +51,9 @@ for mission in MissionTable:
         print("Running program ",mission[1])
 #        mission[2](myRobot,myOdometer)
         mission[2](myRobot)
+
+myRobot.accessoryLeft.stop()
+myRobot.accessoryRight.stop()
+myRobot.driveBase.stop()
 
 wait(500)
