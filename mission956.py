@@ -61,13 +61,25 @@ def mission956(myRobot):
     drive.straight(-90, then=Stop.BRAKE, wait=True)
     myRobot.rotateAbs(85)
 
+# up to here the position should be reproduceable
+
+# attack 
     drive.settings(straight_speed=MEDIUM_FAST_SPEED, straight_acceleration=2 * MEDIUM_FAST_SPEED)
     drive.straight(380, then=Stop.BRAKE, wait=True)
     drive.settings(straight_speed=SLOW_SPEED, straight_acceleration=2 * SLOW_SPEED)
     drive.straight(40, then=Stop.BRAKE, wait=True)
     # impact ores
     myRobot.rotateAbs(45,0)
-    myRobot.rotateAbs(120,0)
+    drive.straight(-20, then=Stop.BRAKE, wait=True)
+
+    # drive home
+    myRobot.rotateAbs(90,0)
+    drive.turn(90)
+    drive.settings(straight_speed=FAST_SPEED, straight_acceleration=2 * FAST_SPEED)
+    drive.straight(800, then=Stop.BRAKE, wait=True)
+
+
+    return
     myRobot.rotateAbs(60,0)
 
     actual_angle=myRobot.hub.imu.heading();   

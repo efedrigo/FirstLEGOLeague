@@ -43,6 +43,6 @@ def mission12(myRobot):
     drive.straight(-DISTANCE2)
     myRobot.rotateAbs(0)
     drive.settings(straight_speed=FAST_SPEED, straight_acceleration=2 * FAST_SPEED)
-    drive.straight(-DISTANCE1+DISTANCE2)
+    drive.straight(-(DISTANCE1+DISTANCE2))
     return
                     

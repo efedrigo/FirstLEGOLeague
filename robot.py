@@ -174,7 +174,7 @@ class robotCompetition():
         print("runStraight end:",self.driveBase.distance())
     
     def rotate(self,degrees):
-        self.driveBase.settings(500,1000,300,1200); # speed, accel, angular speed, angular accel
+        self.driveBase.settings(500,1000,300,2*300); # speed, accel, angular speed, angular accel
         actual_angle=self.driveBase.angle();   
         print("rotate start:",actual_angle)
         self.driveBase.turn(degrees,then=Stop.HOLD, wait=True)
@@ -197,8 +197,8 @@ class robotCompetition():
     # if the parameter is 1 or more or default, the robot will retry until the angle is reached
     # which will force a lateral motion of the robot in case of an obstacle
 
-    def rotateAbs(self,degrees,try_number=3):
-        self.driveBase.settings(500,1000,300,1200); # speed, accel, angular speed, angular accel
+    def rotateAbs(self,degrees,try_number=3,accel=300):
+        self.driveBase.settings(500,1000,accel,1200); # speed, accel, angular speed, angular accel
         actual_angle=self.hub.imu.heading();   
         target=degrees-actual_angle
 
