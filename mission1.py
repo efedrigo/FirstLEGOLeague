@@ -23,10 +23,10 @@ import umath as umath
 
 
 # Speed levels (mm/s)
-FAST_SPEED = 500
+FAST_SPEED = 600
 MEDIUM_SPEED = 300
-SLOW_SPEED = 100
-DISTANCE1 = 650
+SLOW_SPEED = 300
+DISTANCE1 = 630
 
 def mission1(myRobot):
     """Run mission 1 using `myRobot` components.
@@ -80,9 +80,9 @@ def mission1(myRobot):
     myRobot.accessoryLeft.reset_angle(0)
     myRobot.accessoryRight.reset_angle(0)
 
-    # --- 2) Turn left 90 degrees (blocking) ---
-    myRobot.rotateAbs(-115,accel=100)
-    myRobot.rotateAbs(-65)
+    # Turn left and right to lower the doors
+    myRobot.rotateAbs(-110,accel=100)
+#    myRobot.rotateAbs(-65)
     myRobot.rotateAbs(-90)
 
     # --- 3) Slow move straight (medium speed) 250 mm (blocking) ---
@@ -93,31 +93,34 @@ def mission1(myRobot):
     drive.straight(80)
 
     # on target and aligned
-    myRobot.accessoryLeft.run_target(1000, accessory_left_sign * 600, wait=True)
-    myRobot.accessoryLeft.run_target(1000, accessory_left_sign * 0, wait=True)
+    myRobot.accessoryLeft.run_target(1500, accessory_left_sign * 600, wait=True)
+    myRobot.accessoryLeft.run_target(1500, accessory_left_sign * 0, wait=True)
 
+    myRobot.accessoryRight.run_target(110, accessory_right_sign * 105, wait=False)
     # --- 6) Slow move straight back 200 mm (blocking) ---
     drive.straight(-150)
 
     # --- 7) Turn 45° to the right (blocking) ---
-    myRobot.rotateAbs(-50)
+    myRobot.rotateAbs(-45)
 
     # get the object
-    myRobot.accessoryRight.run_target(110, accessory_right_sign * 105, wait=True)
     drive.settings(straight_speed=MEDIUM_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
 
 # change back to 180 if modified push above. Alternativa value is 200
     drive.straight(180)
     myRobot.accessoryRight.run_target(100, accessory_right_sign * 0, wait=False)
     # here I got the object
-    drive.straight(-40)
+
+    # abbassa la cremagliera
+    myRobot.accessoryLeft.run_target(600, accessory_left_sign * 700, wait=False)
+    drive.straight(-45)
 
     i=0
     while abs(myRobot.accessoryRight.angle())> abs(accessory_right_sign * 10) and i<100:
         wait(10)
         i+=1
 
-    myRobot.rotateAbs(-37)
+    myRobot.rotateAbs(-39)
 
     # abbassa la cremagliera
     myRobot.accessoryLeft.run_target(600, accessory_left_sign * 700, wait=True)
@@ -126,11 +129,12 @@ def mission1(myRobot):
     drive.straight(200)
 
     myRobot.accessoryLeft.run_target(600, accessory_left_sign * 0, wait=True)
-    drive.straight(200)
+    drive.straight(100)
 
     drive.settings(straight_speed=FAST_SPEED, straight_acceleration=2 * FAST_SPEED)
     # --- 11) Move straight back 200 mm at medium speed (blocking) ---
-    drive.straight(-250)
+    drive.straight(-100)
+    drive.arc(-500,-90)
 
     # --- 12) Turn towards initial heading (assume DriveBase.angle() available) ---
     # If DriveBase provides `angle()` (current heading), use it. Otherwise this step
@@ -140,11 +144,11 @@ def mission1(myRobot):
 #        drive.turn(-current_heading+15)
 #    except Exception:
         # Fallback: assume net heading after previous ops is +45 degrees left, undo it
-    myRobot.rotateAbs(-160)
+#    myRobot.rotateAbs(-160)
 
     # --- 13) Fast move straight to return approximately to the initial position ---
     # We assume returning along original heading back by 620 mm (undo initial forward)
-    drive.settings(straight_speed=FAST_SPEED, straight_acceleration=2 * FAST_SPEED)
-    drive.straight(450)
+#    drive.settings(straight_speed=FAST_SPEED, straight_acceleration=2 * FAST_SPEED)
+ #   drive.straight(450)
 
     return
