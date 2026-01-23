@@ -59,13 +59,13 @@ def program1(myRobot):
     print("Test motion left")
     myRobot.hub.display.icon(Icon.ARROW_LEFT)
     myRobot.motorLeft.reset_angle(0);
-    #    motorLeft.run_angle(360,360);
+    myRobot.motorLeft.run_angle(360,360*5);
     wait(1000)
 
     print("Test motion right")
     myRobot.hub.display.icon(Icon.ARROW_RIGHT)
     myRobot.motorRight.reset_angle(0);
-    #   motorRight.run_angle(360,360);
+    myRobot.motorRight.run_angle(360,360*5);
     wait(1000)
 
     myRobot.hub.display.icon(Icon.HAPPY)

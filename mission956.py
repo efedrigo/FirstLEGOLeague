@@ -24,16 +24,22 @@ def mission956(myRobot):
     drive.use_gyro(True)
 
     drive.settings(straight_speed=FAST_SPEED, straight_acceleration=2 * FAST_SPEED)
+    myRobot.accessoryLeft.dc(-accessory_left_sign * 60)
 
 #    drive.straight(740, then=Stop.BRAKE, wait=True)
 #    myRobot.rotateAbs(90)
 #    drive.straight(940, then=Stop.HOLD, wait=True)
 
-    drive.straight(540, then=Stop.BRAKE, wait=True)
-    drive.arc(200,90,then=Stop.BRAKE)
-    drive.straight(760, then=Stop.BRAKE, wait=True)
+# first part, originally was 540
+    drive.straight(560, then=Stop.BRAKE, wait=True)
+    myRobot.accessoryLeft.stop()
+    myRobot.accessoryLeft.reset_angle(0)
 
-    drive.turn(50, then=Stop.HOLD, wait=True)
+    drive.arc(200,90,then=Stop.BRAKE)
+#    drive.straight(760, then=Stop.BRAKE, wait=True)
+#    drive.turn(50, then=Stop.HOLD, wait=True)
+    drive.straight(680, then=Stop.BRAKE, wait=True)
+    drive.arc(200,45,then=Stop.BRAKE)
     wait(100)
 
     myRobot.rotateAbs(130,0)
@@ -69,46 +75,24 @@ def mission956(myRobot):
     drive.settings(straight_speed=SLOW_SPEED, straight_acceleration=2 * SLOW_SPEED)
     drive.straight(40, then=Stop.BRAKE, wait=True)
     # impact ores
-    myRobot.rotateAbs(45,0)
-    drive.straight(-20, then=Stop.BRAKE, wait=True)
+    myRobot.accessoryLeft.run_target(1500, accessory_left_sign * 150, wait=True)
+    myRobot.rotateAbs(90,1)
+
+    drive.straight(-120, then=Stop.BRAKE, wait=True)
+#    drive.straight(90, then=Stop.BRAKE, wait=True)
+    myRobot.rotateAbs(100,1)
+    myRobot.accessoryLeft.run_target(1500, accessory_left_sign * 0, wait=False)
+    drive.straight(20, then=Stop.BRAKE, wait=True)
+    myRobot.rotateAbs(130,1)
+    drive.straight(100, then=Stop.BRAKE, wait=True)
+    myRobot.rotateAbs(160,2)
 
     # drive home
-    myRobot.rotateAbs(90,0)
-    drive.turn(90)
     drive.settings(straight_speed=FAST_SPEED, straight_acceleration=2 * FAST_SPEED)
-    drive.straight(800, then=Stop.BRAKE, wait=True)
-
-
-    return
-    myRobot.rotateAbs(60,0)
-
-    actual_angle=myRobot.hub.imu.heading();   
-    print("actual angle 5:", actual_angle)
-
-    if (actual_angle>70):
-        drive.straight(-40, then=Stop.BRAKE, wait=True)
-        drive.turn(20)
-        myRobot.rotateAbs(60,1)
-        drive.straight(40, then=Stop.BRAKE, wait=True)
-        myRobot.hub.display.icon(Icon.HAPPY)
-
-    actual_angle=myRobot.hub.imu.heading();   
-    print("actual angle 6:", actual_angle)
-    drive.straight(80, then=Stop.BRAKE, wait=True)
-    drive.straight(-40, then=Stop.BRAKE, wait=True)
-
-    myRobot.rotateAbs(100)
-    myRobot.rotateAbs(45)
-    drive.straight(-90, then=Stop.BRAKE, wait=True)
-
-    # final run
-    myRobot.rotateAbs(95)
-    drive.straight(600, then=Stop.BRAKE, wait=True)
-    drive.straight(-300, then=Stop.BRAKE, wait=True)
-    myRobot.rotateAbs(160,0)
-
-    drive.settings(straight_speed=FAST_SPEED, straight_acceleration=2 * FAST_SPEED)
-    drive.straight(800, then=Stop.BRAKE, wait=True)
+    drive.straight(470, then=Stop.NONE, wait=True)
+    drive.arc(-200, 60,then=Stop.BRAKE, wait=True)
 
     return
 
+
+  

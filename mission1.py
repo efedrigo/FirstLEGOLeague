@@ -101,7 +101,7 @@ def mission1(myRobot):
     drive.straight(-150)
 
     # --- 7) Turn 45° to the right (blocking) ---
-    myRobot.rotateAbs(-45)
+    myRobot.rotateAbs(-48)
 
     # get the object
     drive.settings(straight_speed=MEDIUM_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
@@ -112,18 +112,18 @@ def mission1(myRobot):
     # here I got the object
 
     # abbassa la cremagliera
-    myRobot.accessoryLeft.run_target(600, accessory_left_sign * 700, wait=False)
-    drive.straight(-45)
+    myRobot.accessoryLeft.run_target(600, accessory_left_sign * 690, wait=False)
+    drive.straight(-40)
 
     i=0
     while abs(myRobot.accessoryRight.angle())> abs(accessory_right_sign * 10) and i<100:
         wait(10)
         i+=1
 
-    myRobot.rotateAbs(-39)
+    myRobot.rotateAbs(-37.5)
 
-    # abbassa la cremagliera
-    myRobot.accessoryLeft.run_target(600, accessory_left_sign * 700, wait=True)
+#    # abbassa la cremagliera
+#    myRobot.accessoryLeft.run_target(600, accessory_left_sign * 650, wait=True)
 
     drive.settings(straight_speed=SLOW_SPEED, straight_acceleration=2 * MEDIUM_SPEED)
     drive.straight(200)
@@ -133,8 +133,8 @@ def mission1(myRobot):
 
     drive.settings(straight_speed=FAST_SPEED, straight_acceleration=2 * FAST_SPEED)
     # --- 11) Move straight back 200 mm at medium speed (blocking) ---
-    drive.straight(-100)
-    drive.arc(-500,-90)
+    drive.straight(-50)
+    drive.arc(-500,-99)
 
     # --- 12) Turn towards initial heading (assume DriveBase.angle() available) ---
     # If DriveBase provides `angle()` (current heading), use it. Otherwise this step
