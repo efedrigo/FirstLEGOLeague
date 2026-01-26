@@ -103,7 +103,7 @@ def mission8(myRobot):
 
     drive.settings(straight_speed=MEDIUM_SLOW_SPEED, straight_acceleration=FAST_SPEED)
     drive.straight(200, then=Stop.BRAKE, wait=True)
-    drive.turn(-10)
+#    drive.turn(-10)
    
     print("8")
     wait(1)
@@ -117,7 +117,7 @@ def mission8(myRobot):
 
 # --- 5) Girati e ritorna in base
     drive.settings(straight_speed=FAST_SPEED, straight_acceleration=FAST_SPEED)
-    drive.arc(-120,-85)
+    drive.arc(-130,-85)
     drive.straight(1000)
 
     return

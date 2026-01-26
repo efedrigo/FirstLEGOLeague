@@ -57,7 +57,7 @@ def mission8(myRobot): # alternative
     drive.arc(100,45)
     myRobot.rotateAbs(-90)
     drive.settings(straight_speed=SLOW_SPEED, straight_acceleration=SLOW_SPEED,turn_rate=100,turn_acceleration=200 )
-    drive.straight(90, then=Stop.BRAKE, wait=True)
+    drive.straight(85, then=Stop.BRAKE, wait=True)
     drive.arc(-85,78)
 
 
@@ -67,10 +67,10 @@ def mission8(myRobot): # alternative
     drive.settings(straight_speed=FAST_SPEED, straight_acceleration=FAST_SPEED)
     drive.straight(-100)
 
-    angle=-92;
+    angle=-88;
     drive.arc(-120,angle)
     myRobot.rotateAbs(angle)
-    drive.straight(1100)
+    drive.straight(1200)
 
     return
 
